@@ -1,0 +1,9 @@
+.DS_Store
+*~
+ssdt?.dsl
+dsdt.dsl
+patched/ssdt*.dsl
+patched/dsdt.dsl
+build/*.aml
+unpatched/*
+!unpatched/readme.txt

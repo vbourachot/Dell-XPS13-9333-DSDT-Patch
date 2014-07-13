@@ -1,0 +1,34 @@
+Installation: had to boot with ig-platform-id ending in 08 to get to the installer
+Post-installation: have to boot with ig-platform-id ending in 06 to get to desktop
+
+- Install Clover (AptioFix64 only)
+Note: ended up dd from disk1s1 to disk0s1 (i.e. copy EFI from USB to HD). Might have been just because i didn’t set up the EFI boot right in bios (EFI\BOOT\BOOTX64.efi) let the file chooser do it in BIOS. So the next 2 steps were already done..
+
+- Copy Hfsplus.efi to drivers64UEFI
+
+- Copy fakesmc & voodoops2 to /EFI/kext/10.9
+
+- Install voodoo daemon
+cd Downloads/MV/RehabMan-Voodoo-2014-0523
+sudo cp org.rehabman.voodoo.driver.Daemon.plist /Library/LaunchDaemons/
+(Edit plist to point to /usr/local/bin)
+sudo cp Release/VoodooPS2Daemon /usr/local/bin/
+
+- Copy config.plist to /EFI
+cp xps13/clover/config.plist /Volumes/ESP/EFI/CLOVER/
+
+- Get iAsl
+sudo cp ./iasl /usr/local/bin/
+
+- Generate ssdt
+./ssdtPRGen.sh -d 0
+
+- copy ssdt.aml to /EFI/ACPI/patched
+
+- Generate DSDT & GFX ssdt, and place in clover
+
+- Inject appropriate channels in EAPD commander (headphones 21 / speakers 20?)
+
+- copy ACPI backlight, ACPI Battery and EAPD commander to clover kext
+
+- copy modified appleHDA to /S/L/E
