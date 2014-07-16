@@ -153,6 +153,34 @@
 				AAAAAAAAAAAA
 				</data>
 			</dict>
+			<dict>
+				<key>Name</key>
+				<string>AirPortBrcm4360</string>
+				<key>Comment</key>
+				<string>Airport - 3rd party card</string>
+				<key>Find</key>
+				<data>
+				MGsQAAB1DQ==
+				</data>
+				<key>Replace</key>
+				<data>
+				MGsQAAB0DQ==
+				</data>
+			</dict>
+			<dict>
+				<key>Name</key>
+				<string>AirPortBrcm4360</string>
+				<key>Comment</key>
+				<string>BCM4352 5GHZ</string>
+				<key>Find</key>
+				<data>
+				AVhU
+				</data>
+				<key>Replace</key>
+				<data>
+				AVhY
+				</data>
+			</dict>
 		</array>
 	</dict>
 	<key>SMBIOS</key>
