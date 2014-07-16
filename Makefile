@@ -7,6 +7,15 @@
 # Adapted by vbourachot for XPS 13 9333
 #
 
+# DSDT patch: from compiled acpi tables to installed patched dsdt/ssdt-1
+# make distclean disassemble patch && make && make install
+#
+# AppleHDA patch: Create injector kext and install in SLE
+# make patch_hda && sudo make install_hda
+#
+# Install Clover config
+# make install_config
+
 GFXSSDT=ssdt5
 EFIDIR=/Volumes/EFI
 EFIVOL=/dev/disk0s1
@@ -19,11 +28,13 @@ UNPATCHED=./unpatched
 PRODUCTS=$(BUILDDIR)/dsdt.aml $(BUILDDIR)/$(GFXSSDT).aml
 DISASSEMBLE_SCRIPT=./disassemble.sh
 
+PATCH_HDA_SCRIPT=./patch_hda.sh
+HDACODEC=ALC668
+
 IASLFLAGS=-vr -w1
 IASL=/usr/local/bin/iasl
 PATCHMATIC=/usr/local/bin/patchmatic
 
-.PHONY: all
 all: $(PRODUCTS)
 
 $(BUILDDIR)/dsdt.aml: $(PATCHED)/dsdt.dsl
@@ -32,19 +43,21 @@ $(BUILDDIR)/dsdt.aml: $(PATCHED)/dsdt.dsl
 $(BUILDDIR)/$(GFXSSDT).aml: $(PATCHED)/$(GFXSSDT).dsl
 	$(IASL) $(IASLFLAGS) -p $@ $<
 	
-.PHONY: clean
 clean:
-	rm $(PRODUCTS)
+	rm -f $(PRODUCTS)
+	rm -rf $(BUILDDIR)/AppleHDA_$(HDACODEC).kext
+	rm -f $(PATCHED)/*.dsl
+
+distclean: clean
+	rm -f $(UNPATCHED)/*.dsl
 
 # Chameleon Install - NOT TESTED
-.PHONY: install_extra
 install_extra: $(PRODUCTS)
 	-rm $(EXTRADIR)/ssdt-*.aml
 	cp $(BUILDDIR)/dsdt.aml $(EXTRADIR)/dsdt.aml
 	cp $(BUILDDIR)/$(GFXSSDT).aml $(EXTRADIR)/ssdt-1.aml
 
 # Clover Install
-.PHONY: install
 install: $(PRODUCTS)
 	if [ ! -d $(EFIDIR) ]; then mkdir $(EFIDIR) && diskutil mount -mountPoint $(EFIDIR) $(EFIVOL); fi
 	cp $(BUILDDIR)/dsdt.aml $(EFIDIR)/EFI/CLOVER/ACPI/patched
@@ -52,9 +65,7 @@ install: $(PRODUCTS)
 	diskutil unmount $(EFIDIR)
 	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi
 
-
 # Patch with 'patchmatic'
-.PHONY: patch
 patch:
 	cp $(UNPATCHED)/dsdt.dsl $(UNPATCHED)/$(GFXSSDT).dsl $(PATCHED)
 
@@ -71,10 +82,10 @@ patch:
 	# NOTE: 1 change
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl patches/remove_wmi.txt $(PATCHED)/dsdt.dsl	
 
-	# NOTE: DISABLE
-	# $(PATCHMATIC) $(PATCHED)/dsdt.dsl patches/keyboard.txt $(PATCHED)/dsdt.dsl
+	# NOTE: updated
+	$(PATCHMATIC) $(PATCHED)/dsdt.dsl patches/keyboard.txt $(PATCHED)/dsdt.dsl
 
-	# NOTE: Check layout id in patch - (set to 1)
+	# NOTE: Check layout id in patch - (20140715: set to 1)
 	# NOTE: 2 patches, 1 change
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl patches/audio.txt $(PATCHED)/dsdt.dsl
 
@@ -97,7 +108,7 @@ patch:
 	# $(PATCHMATIC) $(PATCHED)/$(GFXSSDT).dsl patches/hdmi_audio.txt $(PATCHED)/$(GFXSSDT).dsl
 
 	# TODO: Skip for now (for usb)
-	# $(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/usb/usb_7-series.txt $(PATCHED)/dsdt.dsl
+	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/usb/usb_7-series.txt $(PATCHED)/dsdt.dsl
 
 	# System patches - run as is?
 	# NOTE: 1 change
@@ -105,9 +116,9 @@ patch:
 	# NOTE: 1 change
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_OSYS.txt $(PATCHED)/dsdt.dsl
 	# DISABLED IN GIT - NOTE: 1 change
-	#$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_MCHC.txt $(PATCHED)/dsdt.dsl
+	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_MCHC.txt $(PATCHED)/dsdt.dsl
 	# DISABLED IN GIT - NOTE: 4 changes
-	#$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_HPET.txt $(PATCHED)/dsdt.dsl
+	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_HPET.txt $(PATCHED)/dsdt.dsl
 	# NOTE: 1 change
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_RTC.txt $(PATCHED)/dsdt.dsl
 	# NOTE: 1 change
@@ -119,24 +130,41 @@ patch:
 	# NOTE: 1 change
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_IMEI.txt $(PATCHED)/dsdt.dsl
 
-	# Stands to reason to replace with dell xps 13 patch battery_Dell-XPS-13.txt 
-	# NOTE: 15 changes
-	# $(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/battery/battery_Lenovo-Ux10-Z580.txt $(PATCHED)/dsdt.dsl
-	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/battery/battery_Dell-XPS-13.txt $(PATCHED)/dsdt.dsl
-	
+	# NOTE: From Dell 7000 thread
+	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_Shutdown2.txt $(PATCHED)/dsdt.dsl
+	# NOTE: From Dell 7000 thread
+	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_ADP1.txt $(PATCHED)/dsdt.dsl
 
-.PHONY: patch_debug
+
+	# NOTE: 15 changes
+	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/battery/battery_Dell-XPS-13.txt $(PATCHED)/dsdt.dsl
+
 patch_debug:
 	make patch
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(DEBUGGIT)/debug.txt $(PATCHED)/dsdt.dsl
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl patches/debug.txt $(PATCHED)/dsdt.dsl
-	#$(PATCHMATIC) $(PATCHED)/dsdt.dsl patches/debug1.txt $(PATCHED)/dsdt.dsl
 
 
-.PHONY: disassemble
 disassemble:
 	$(DISASSEMBLE_SCRIPT)
 
+
+patch_hda: 
+	$(PATCH_HDA_SCRIPT)
+
+install_hda:
+	cp -r $(BUILDDIR)/AppleHDA_$(HDACODEC).kext /System/Library/Extensions/
+
+# Clover config.plist install
+install_config: 
+	if [ ! -d $(EFIDIR) ]; then mkdir $(EFIDIR) && diskutil mount -mountPoint $(EFIDIR) $(EFIVOL); fi
+	cp ./config.plist $(EFIDIR)/EFI/CLOVER/
+	diskutil unmount $(EFIDIR)
+	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi
+
+
+.PHONY: all clean distclean patch patch_debug install install_extra \
+		disassemble patch_hda install_hda install_config 
 
 # native correlations
 # ssdt1 - sensrhub
