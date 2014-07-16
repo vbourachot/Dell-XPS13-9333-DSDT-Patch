@@ -2,23 +2,24 @@
 
 #set -x
 
-codec=ALC283
+codec=ALC668
 unpatched=/System/Library/Extensions
+builddir=./build
 
 # AppleHDA patching function
 function createAppleHDAInjector()
 {
 # create AppleHDA injector for Clover setup...
     echo -n "Creating AppleHDA injector for $1..."
-    cp -R $unpatched/AppleHDA.kext/ AppleHDA_$1.kext
-    rm -R AppleHDA_$1.kext/Contents/Resources/*
-    rm -R AppleHDA_$1.kext/Contents/PlugIns
-    rm -R AppleHDA_$1.kext/Contents/_CodeSignature
-    rm -R AppleHDA_$1.kext/Contents/MacOS/AppleHDA
-    rm AppleHDA_$1.kext/Contents/version.plist
-    ln -s /System/Library/Extensions/AppleHDA.kext/Contents/MacOS/AppleHDA AppleHDA_$1.kext/Contents/MacOS/AppleHDA
-    cp ./Resources/layout/*.zlib AppleHDA_$1.kext/Contents/Resources/
-    plist=AppleHDA_$1.kext/Contents/Info.plist
+    cp -R $unpatched/AppleHDA.kext/ $builddir/AppleHDA_$1.kext
+    rm -R $builddir/AppleHDA_$1.kext/Contents/Resources/*
+    rm -R $builddir/AppleHDA_$1.kext/Contents/PlugIns
+    rm -R $builddir/AppleHDA_$1.kext/Contents/_CodeSignature
+    rm -R $builddir/AppleHDA_$1.kext/Contents/MacOS/AppleHDA
+    rm $builddir/AppleHDA_$1.kext/Contents/version.plist
+    ln -s /System/Library/Extensions/AppleHDA.kext/Contents/MacOS/AppleHDA $builddir/AppleHDA_$1.kext/Contents/MacOS/AppleHDA
+    cp ./Resources/layout/*.zlib $builddir/AppleHDA_$1.kext/Contents/Resources/
+    plist=$builddir/AppleHDA_$1.kext/Contents/Info.plist
     replace=`/usr/libexec/plistbuddy -c "Print :NSHumanReadableCopyright" $plist | perl -pi -e 's/(\d*\.\d*\.\d*)/900\1/g'`
     /usr/libexec/plistbuddy -c "Set :NSHumanReadableCopyright '$replace'" $plist
     replace=`/usr/libexec/plistbuddy -c "Print :CFBundleGetInfoString" $plist | perl -pi -e 's/(\d*\.\d*\.\d*)/900\1/g'`
@@ -36,8 +37,8 @@ function createAppleHDAInjector()
     /usr/libexec/plistbuddy -c "Add ':IOKitPersonalities:HDA Hardware Config Resource:IOProbeScore' integer" $plist
     /usr/libexec/plistbuddy -c "Set ':IOKitPersonalities:HDA Hardware Config Resource:IOProbeScore' 2000" $plist
     /usr/libexec/plistbuddy -c "Merge ./Resources/ahhcd.plist ':IOKitPersonalities:HDA Hardware Config Resource'" $plist
-    echo " Done."
+    echo " Done: $builddir/AppleHDA_$1.kext"
 }
 
-rm -R AppleHDA_$codec.kext
+rm -Rf $builddir/AppleHDA_$codec.kext
 createAppleHDAInjector "$codec"

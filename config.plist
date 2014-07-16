@@ -107,6 +107,39 @@
 		<true/>
 		<key>KernelPm</key>
 		<true/>
+		<key>KextsToPatch</key>
+		<array>
+			<dict>
+				<key>Name</key>
+				<string>AppleHDA</string>
+				<key>Comment</key>
+				<string>Expect 2 matches</string>
+				<key>Find</key>
+				<string>8408ec10</string>
+				<key>Replace</key>
+				<string>00000000</string>
+			</dict>
+			<dict>
+				<key>Name</key>
+				<string>AppleHDA</string>
+				<key>Comment</key>
+				<string>Expect 2 matches</string>
+				<key>Find</key>
+				<string>8508ec10</string>
+				<key>Replace</key>
+				<string>00000000</string>
+			</dict>
+			<dict>
+				<key>Name</key>
+				<string>AppleHDA</string>
+				<key>Comment</key>
+				<string>Expect 2 matches</string>
+				<key>Find</key>
+				<string>8419d411</string>
+				<key>Replace</key>
+				<string>6806ec10</string>
+			</dict>
+		</array>
 	</dict>
 	<key>SMBIOS</key>
 	<dict>
