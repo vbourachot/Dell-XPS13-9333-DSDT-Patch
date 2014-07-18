@@ -68,37 +68,19 @@ install: $(PRODUCTS)
 # Patch with 'patchmatic'
 patch:
 	cp $(UNPATCHED)/dsdt.dsl $(UNPATCHED)/$(GFXSSDT).dsl $(PATCHED)
-
-	# Fixes syntax errors
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl patches/syntax_dsdt.txt $(PATCHED)/dsdt.dsl
 
-	# replace with laptopgit patch: syntax/remove_DSM.txt (exact copy)
-	# NOTE: 28 changes
-	# $(PATCHMATIC) $(PATCHED)/dsdt.dsl patches/cleanup.txt $(PATCHED)/dsdt.dsl
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/syntax/remove_DSM.txt $(PATCHED)/dsdt.dsl
-	# $(PATCHMATIC) $(PATCHED)/$(GFXSSDT).dsl patches/cleanup.txt $(PATCHED)/$(GFXSSDT).dsl
 	$(PATCHMATIC) $(PATCHED)/$(GFXSSDT).dsl $(LAPTOPGIT)/syntax/remove_DSM.txt $(PATCHED)/$(GFXSSDT).dsl
-
-	# NOTE: 1 change
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl patches/remove_wmi.txt $(PATCHED)/dsdt.dsl	
 
-	# NOTE: updated
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl patches/keyboard.txt $(PATCHED)/dsdt.dsl
 
-	# NOTE: Check layout id in patch - (20140715: set to 1)
-	# NOTE: 2 patches, 1 change
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl patches/audio.txt $(PATCHED)/dsdt.dsl
 
-	# TODO: Skip for now
-	# $(PATCHMATIC) $(PATCHED)/dsdt.dsl patches/sensors.txt $(PATCHED)/dsdt.dsl
-
-	# NOTE: 4 changes
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_IRQ.txt $(PATCHED)/dsdt.dsl
 
-	# NOTE: 37 changes	
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/graphics/graphics_Rename-GFX0.txt $(PATCHED)/dsdt.dsl
-
-	# NOTE: 5 changes	
 	$(PATCHMATIC) $(PATCHED)/$(GFXSSDT).dsl $(LAPTOPGIT)/graphics/graphics_Rename-GFX0.txt $(PATCHED)/$(GFXSSDT).dsl
 
 	# ISSUE?: 12 patches, only 2 changes (same if applies to DSDT??)
@@ -107,36 +89,21 @@ patch:
 	# TODO: Skip for now (hdmi audio)
 	# $(PATCHMATIC) $(PATCHED)/$(GFXSSDT).dsl patches/hdmi_audio.txt $(PATCHED)/$(GFXSSDT).dsl
 
-	# TODO: Skip for now (for usb)
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/usb/usb_7-series.txt $(PATCHED)/dsdt.dsl
-
-	# System patches - run as is?
-	# NOTE: 1 change
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_WAK2.txt $(PATCHED)/dsdt.dsl
-	# NOTE: 1 change
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_OSYS.txt $(PATCHED)/dsdt.dsl
-	# DISABLED IN GIT - NOTE: 1 change
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_MCHC.txt $(PATCHED)/dsdt.dsl
-	# DISABLED IN GIT - NOTE: 4 changes
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_HPET.txt $(PATCHED)/dsdt.dsl
-	# NOTE: 1 change
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_RTC.txt $(PATCHED)/dsdt.dsl
-	# NOTE: 1 change
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_SMBUS.txt $(PATCHED)/dsdt.dsl
-	# NOTE: 3 changes
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_Mutex.txt $(PATCHED)/dsdt.dsl
-	# NOTE: 1 change
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_PNOT.txt $(PATCHED)/dsdt.dsl
-	# NOTE: 1 change
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_IMEI.txt $(PATCHED)/dsdt.dsl
-
 	# NOTE: From Dell 7000 thread
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_Shutdown2.txt $(PATCHED)/dsdt.dsl
 	# NOTE: From Dell 7000 thread
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_ADP1.txt $(PATCHED)/dsdt.dsl
 
-
-	# NOTE: 15 changes
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/battery/battery_Dell-XPS-13.txt $(PATCHED)/dsdt.dsl
 
 patch_debug:
@@ -155,16 +122,33 @@ patch_hda:
 install_hda:
 	cp -r $(BUILDDIR)/AppleHDA_$(HDACODEC).kext /System/Library/Extensions/
 
-# Clover config.plist install
+# Install Clover config.plist
 install_config: 
 	if [ ! -d $(EFIDIR) ]; then mkdir $(EFIDIR) && diskutil mount -mountPoint $(EFIDIR) $(EFIVOL); fi
 	cp ./config.plist $(EFIDIR)/EFI/CLOVER/
 	diskutil unmount $(EFIDIR)
 	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi
 
+# Install CodecCommander custom Info.plist
+install_plist_cc: 
+	if [ ! -d $(EFIDIR) ]; then mkdir $(EFIDIR) && diskutil mount -mountPoint $(EFIDIR) $(EFIVOL); fi
+	cp ./plists/CodecCommander_Info.plist $(EFIDIR)/EFI/CLOVER/kexts/10.9/CodecCommander.kext/Contents/Info.plist
+	touch $(EFIDIR)/EFI/CLOVER/kexts/10.9/CodecCommander.kext
+	diskutil unmount $(EFIDIR)
+	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi
+
+# Install VoodooPS2Keyboard (in VoodooPS2Controller) custom Info.plist
+install_plist_kb: 
+	if [ ! -d $(EFIDIR) ]; then mkdir $(EFIDIR) && diskutil mount -mountPoint $(EFIDIR) $(EFIVOL); fi
+	cp ./plists/VoodooPS2Keyboard_Info.plist $(EFIDIR)/EFI/CLOVER/kexts/10.9/VoodooPS2Controller.kext/Contents/PlugIns/VoodooPS2Keyboard.kext/Contents/Info.plist
+	touch $(EFIDIR)/EFI/CLOVER/kexts/10.9/VoodooPS2Controller.kext
+	diskutil unmount $(EFIDIR)
+	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi
+
 
 .PHONY: all clean distclean patch patch_debug install install_extra \
-		disassemble patch_hda install_hda install_config 
+		disassemble patch_hda install_hda install_config \
+		install_plist_cc install_plist_kb
 
 # native correlations
 # ssdt1 - sensrhub
