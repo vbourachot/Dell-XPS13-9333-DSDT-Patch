@@ -184,6 +184,41 @@
 						ATAPAAAD
 						</data>
 					</array>
+					<key>MSLD</key>
+					<array>
+						<string>ui8</string>
+						<data>
+						AA==
+						</data>
+					</array>
+					<key>ALI0</key>
+					<array>
+						<string>{ali</string>
+						<data>
+						BgAGAA==
+						</data>
+					</array>
+					<key>ALV0</key>
+					<array>
+						<string>{alv</string>
+						<data>
+						AQEQCAM0AE62AA==
+						</data>
+					</array>
+					<key>ALV1</key>
+					<array>
+						<string>{alv</string>
+						<data>
+						AAEAAAAAAAAAAA==
+						</data>
+					</array>
+					<key>ALRV</key>
+					<array>
+						<string>ui16</string>
+						<data>
+						AAE=
+						</data>
+					</array>
 				</dict>
 				<key>Types</key>
 				<dict>

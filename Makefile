@@ -137,18 +137,18 @@ install_plist_cc:
 	diskutil unmount $(EFIDIR)
 	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi
 
-# Install VoodooPS2Keyboard (in VoodooPS2Controller) custom Info.plist
-install_plist_kb: 
+# Install FakeSMC custom Info.plist
+install_plist_smc: 
 	if [ ! -d $(EFIDIR) ]; then mkdir $(EFIDIR) && diskutil mount -mountPoint $(EFIDIR) $(EFIVOL); fi
-	cp ./plists/VoodooPS2Keyboard_Info.plist $(EFIDIR)/EFI/CLOVER/kexts/10.9/VoodooPS2Controller.kext/Contents/PlugIns/VoodooPS2Keyboard.kext/Contents/Info.plist
-	touch $(EFIDIR)/EFI/CLOVER/kexts/10.9/VoodooPS2Controller.kext
+	cp ./plists/FakeSMC_Info.plist $(EFIDIR)/EFI/CLOVER/kexts/10.9/FakeSMC.kext/Contents/Info.plist
+	touch $(EFIDIR)/EFI/CLOVER/kexts/10.9/FakeSMC.kext
 	diskutil unmount $(EFIDIR)
 	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi
 
 
 .PHONY: all clean distclean patch patch_debug install install_extra \
 		disassemble patch_hda install_hda install_config \
-		install_plist_cc install_plist_kb
+		install_plist_cc install_plist_smc
 
 # native correlations
 # ssdt1 - sensrhub
