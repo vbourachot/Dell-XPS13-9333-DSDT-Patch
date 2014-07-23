@@ -3420,6 +3420,8 @@
 		<dict>
 			<key>PathMap</key>
 			<array>
+				
+				<!-- Mic in: 18 7  (0x12 0x07)-->
 				<array>
 					<array>
 						<array>
@@ -3462,6 +3464,8 @@
 						</array>
 					</array>
 				</array>
+
+				<!-- Speakers: 20 13 3 (0x14 0x0d 0x03) -->
 				<array>
 					<array>
 						<array>
@@ -3527,6 +3531,10 @@
 							</dict>
 						</array>
 					</array>
+
+					<!-- HP 21 12 2 (0x15 0x0c 0x02) -->
+					<!-- HP change to 0x15 0x0d 0x03 (21 13 3) NOK -->
+					<!-- HP change to 0x15 0x0e 0x04 (21 14 4) NOK -->
 					<array>
 						<array>
 							<dict>
