@@ -120,7 +120,9 @@ patch_hda:
 	$(PATCH_HDA_SCRIPT)
 
 install_hda:
-	cp -r $(BUILDDIR)/AppleHDA_$(HDACODEC).kext /System/Library/Extensions/
+	if [ -d /System/Library/Extensions/AppleHDA_$(HDACODEC).kext ]; then rm -rf /System/Library/Extensions/AppleHDA_$(HDACODEC).kext && cp -r $(BUILDDIR)/AppleHDA_$(HDACODEC).kext /System/Library/Extensions/; else cp -r $(BUILDDIR)/AppleHDA_$(HDACODEC).kext /System/Library/Extensions/; fi
+	touch /System/Library/Extensions
+
 
 # Install Clover config.plist
 install_config: 
