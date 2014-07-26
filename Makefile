@@ -123,14 +123,21 @@ patch_hda:
 	$(PATCH_HDA_SCRIPT)
 
 install_hda:
-	if [ -d /System/Library/Extensions/AppleHDA_$(HDACODEC).kext ]; then rm -rf /System/Library/Extensions/AppleHDA_$(HDACODEC).kext && cp -r $(BUILDDIR)/AppleHDA_$(HDACODEC).kext /System/Library/Extensions/; else cp -r $(BUILDDIR)/AppleHDA_$(HDACODEC).kext /System/Library/Extensions/; fi
+	if [ -d /System/Library/Extensions/AppleHDA_$(HDACODEC).kext ]; \
+	then rm -rf /System/Library/Extensions/AppleHDA_$(HDACODEC).kext && cp -r $(BUILDDIR)/AppleHDA_$(HDACODEC).kext /System/Library/Extensions/; \
+	else cp -r $(BUILDDIR)/AppleHDA_$(HDACODEC).kext /System/Library/Extensions/; fi
 	touch /System/Library/Extensions
 
 
 # Install Clover config.plist
+# Appends smbios info if ./config.plist.smbios exists
 install_config: 
 	if [ ! -d $(EFIDIR) ]; then mkdir $(EFIDIR) && diskutil mount -mountPoint $(EFIDIR) $(EFIVOL); fi
-	cp ./config.plist $(EFIDIR)/EFI/CLOVER/
+	if [ -f ./config.plist.smbios ]; then \
+		./config_append_smbios.sh && cp ./config.plist.local $(EFIDIR)/EFI/CLOVER/config.plist; \
+		diff ./config.plist $(EFIDIR)/EFI/CLOVER/config.plist || exit 0; \
+	else cp ./config.plist $(EFIDIR)/EFI/CLOVER/; \
+	fi
 	diskutil unmount $(EFIDIR)
 	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi
 

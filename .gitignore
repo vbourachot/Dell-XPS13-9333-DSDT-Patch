@@ -9,3 +9,6 @@ build/*.kext
 unpatched/*
 !unpatched/readme.txt
 tools/patch-hda.3.4/*
+null_eth/ssdt-rmne_rand_mac.dsl
+config.plist.smbios
+config.plist.local
