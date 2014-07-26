@@ -31,6 +31,9 @@ DISASSEMBLE_SCRIPT=./disassemble.sh
 PATCH_HDA_SCRIPT=./patch_hda.sh
 HDACODEC=ALC668
 
+NULLETHDIR=./null_eth
+PATCH_RMNE_SCRIPT=./patch_null_eth_mac.sh
+
 IASLFLAGS=-vr -w1
 IASL=/usr/local/bin/iasl
 PATCHMATIC=/usr/local/bin/patchmatic
@@ -147,10 +150,23 @@ install_plist_smc:
 	diskutil unmount $(EFIDIR)
 	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi
 
+# Compile ssdt for null ethernet
+null_eth:
+	$(PATCH_RMNE_SCRIPT)
+	$(IASL) $(IASLFLAGS) -p $(BUILDDIR)/ssdt-rmne_rand_mac.aml $(NULLETHDIR)/ssdt-rmne_rand_mac.dsl
+
+# Install null ethernet ssdt
+install_null_eth: null_eth
+	if [ ! -d $(EFIDIR) ]; then mkdir $(EFIDIR) && diskutil mount -mountPoint $(EFIDIR) $(EFIVOL); fi
+	cp $(BUILDDIR)/ssdt-rmne_rand_mac.aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/ssdt-2.aml
+	diskutil unmount $(EFIDIR)
+	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi
+
 
 .PHONY: all clean distclean patch patch_debug install install_extra \
 		disassemble patch_hda install_hda install_config \
-		install_plist_cc install_plist_smc
+		install_plist_cc install_plist_smc \
+		null_eth install_null_eth
 
 # native correlations
 # ssdt1 - sensrhub
