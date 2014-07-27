@@ -31,7 +31,7 @@
 		<key>DualLink</key>
 		<integer>1</integer>
 		<key>ig-platform-id</key>
-		<string>0x0a260005</string>
+		<string>0x0a2e000a</string>
 		<key>Inject</key>
 		<dict>
 			<key>Intel</key>
