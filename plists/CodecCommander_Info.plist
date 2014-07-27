@@ -76,7 +76,7 @@
 					<key>Update Alternate Node</key>
 					<integer>0</integer>
 					<key>Update Headphone Node</key>
-					<integer21</integer>
+					<integer>21</integer>
 					<key>Update Speaker Node</key>
 					<integer>20</integer>
 				</dict>
