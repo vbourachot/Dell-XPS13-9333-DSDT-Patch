@@ -60,7 +60,7 @@
 				<key>Default</key>
 				<dict>
 					<key>Check Infinitely</key>
-					<false/>
+					<true/>
 					<key>Check Interval</key>
 					<integer>3000</integer>
 					<key>Codec Address Number</key>
@@ -68,11 +68,11 @@
 					<key>Engine Output Number</key>
 					<integer>1</integer>
 					<key>Generate Stream</key>
-					<truee/>
-					<key>Stream Delay</key>
-					<integer>500</integer>
+					<false/>
 					<key>Simulate Headphones</key>
 					<integer>33</integer>
+					<key>Stream Delay</key>
+					<integer>500</integer>
 					<key>Update Alternate Node</key>
 					<integer>0</integer>
 					<key>Update Headphone Node</key>
