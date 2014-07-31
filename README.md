@@ -1,15 +1,20 @@
-## Work in progress - Dell XPS 13 9333 DSDT patches
+## Dell XPS 13 9333 DSDT patches
 
 Modified from RehabMan Lenovo U430 DSDT patches git (https://github.com/RehabMan/Lenovo-U430-Touch-DSDT-Patch)
 
 TODO:
- - AppleHDA patching
- - Finish DSDT patching
-
+ - Fix ALC668 headphone out
+ 
 Done:
- - Basic DSDT patches (syntax, backlight, battery, graphics, etc..)
+ - Clover config.plist for XPS 13 9333
+ - AppleHDA patching and injection for ALC668 
+ - Compllete DSDT patching (backlight, battery, graphics, sleep, miniDP, ...)
+ - Custom Info.plist for codec commander and fakesmc
 
-Note: replace linux_native contents with your own extract before patching
+Note: Replace linux_native contents with your own extract before patching
+Note 2: Review and configure Makefile variables before using.
+
+http://www.tonymacx86.com/mavericks-laptop-support/136988-dell-xps-13-9333-haswell-clover-install-dsdt-guide.html
 
 Original readme follows
 

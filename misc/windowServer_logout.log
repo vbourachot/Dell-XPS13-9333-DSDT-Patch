@@ -1,0 +1,42 @@
+Jul 30 19:05:41 vbo-mba.nyc.rr.com WindowServer[112]: CGXGetConnectionProperty: Invalid connection 53251
+Jul 30 19:05:41 vbo-mba.nyc.rr.com WindowServer[112]: CGXRestartSessionWorkspace: session workspace exited for session 256 (on console)
+Jul 30 19:05:41 vbo-mba.nyc.rr.com WindowServer[112]: Session 256 released (1 references)
+Jul 30 19:05:41 vbo-mba.nyc.rr.com WindowServer[112]: Session 256 released (0 references)
+Jul 30 19:05:41 vbo-mba.nyc.rr.com WindowServer[112]: loginwindow connection closed; closing server.
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: Server is starting up
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: Session 256 retained (2 references)
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: Session 256 released (1 references)
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: Session 256 retained (2 references)
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: init_page_flip: page flip mode is on
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: Found 16 modes for display 0x00000000 [16, 0]
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: Found 1 modes for display 0x00000000 [1, 0]
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: Found 1 modes for display 0x00000000 [1, 0]
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: mux_initialize: Couldn't find any matches
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: Found 16 modes for display 0x00000000 [16, 0]
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: Found 1 modes for display 0x00000000 [1, 0]
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: WSMachineUsesNewStyleMirroring: true
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: Display 0x6b84d140: GL mask 0x1; bounds (0, 0)[1920 x 1080], 16 modes available
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: Display 0x003f003f: GL mask 0x8; bounds (0, 0)[4096 x 2160], 2 modes available
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: Display 0x003f003e: GL mask 0x4; bounds (0, 0)[0 x 0], 1 modes available
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: Display 0x003f003d: GL mask 0x2; bounds (0, 0)[0 x 0], 1 modes available
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: WSSetWindowTransform: Singular matrix
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: Display 0x6b84d140: GL mask 0x1; bounds (0, 0)[1920 x 1080], 16 modes available
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: Display 0x003f003f: GL mask 0x8; bounds (2944, 0)[1 x 1], 2 modes available
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: Display 0x003f003e: GL mask 0x4; bounds (2945, 0)[1 x 1], 1 modes available
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: Display 0x003f003d: GL mask 0x2; bounds (2946, 0)[1 x 1], 1 modes available
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: CGXPerformInitialDisplayConfiguration
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]:   Display 0x6b84d140: Unit 0; Vendor 0xdae Model 0x1345 S/N 0 Dimensions 11.54 x 6.50; online enabled built-in, Bounds (0,0)[1920 x 1080], Rotation 0, Resolution 1
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]:   Display 0x003f003f: Unit 3; Vendor 0xffffffff Model 0xffffffff S/N -1 Dimensions 0.00 x 0.00; offline enabled, Bounds (2944,0)[1 x 1], Rotation 0, Resolution 1
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]:   Display 0x003f003e: Unit 2; Vendor 0xffffffff Model 0xffffffff S/N -1 Dimensions 0.00 x 0.00; offline enabled, Bounds (2945,0)[1 x 1], Rotation 0, Resolution 1
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]:   Display 0x003f003d: Unit 1; Vendor 0xffffffff Model 0xffffffff S/N -1 Dimensions 0.00 x 0.00; offline enabled, Bounds (2946,0)[1 x 1], Rotation 0, Resolution 1
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: GLCompositor: GL renderer id 0x01024500, GL mask 0x0000000f, accelerator 0x00003187, unit 0, caps QEX|MIPMAP, vram 1536 MB
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: GLCompositor: GL renderer id 0x01024500, GL mask 0x0000000f, texture max 16384, viewport max {16384, 16384}, extensions FPRG|NPOT|GLSL|FLOAT
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: GLCompositor enabled for tile size [256 x 256]
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: CGXGLInitMipMap: mip map mode is on
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: Display 0x6b84d140: Unit 0; ColorProfile { 2, "Display"}; TransferFormula (1.000000, 1.000000, 1.000000)
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: MPAccessSurfaceForDisplayDevice: Set up page flip mode on display 0x6b84d140 device: 0x7ff1a1f05b90  isBackBuffered: 1 numComp: 3 numDisp: 3
+Jul 30 19:05:42 vbo-mba.nyc.rr.com WindowServer[333]: _CGXGLDisplayContextForDisplayDevice: acquired display context (0x7ff1a1f05b90) - enabling OpenGL
+Jul 30 19:05:44 vbo-mba.nyc.rr.com WindowServer[333]: **DMPROXY** (2) Found `/System/Library/CoreServices/DMProxy'.
+Jul 30 19:05:44 vbo-mba.nyc.rr.com WindowServer[333]: Display 0x6b84d140: Unit 0; ColorProfile { 2, "Display"}; TransferFormula (1.000000, 1.000000, 1.000000)
+Jul 30 19:05:56 vbo-mba.nyc.rr.com WindowServer[333]: **DMPROXY** (2) Found `/System/Library/CoreServices/DMProxy'.
+Jul 30 19:05:57 vbo-mba.nyc.rr.com WindowServer[333]: Display 0x6b84d140: Unit 0; ColorProfile { 2, "Display"}; TransferFormula (1.000000, 1.000000, 1.000000)

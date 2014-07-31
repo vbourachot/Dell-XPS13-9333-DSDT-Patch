@@ -1,0 +1,40 @@
+Original ConfigData encoded Base64:
+
+ASccEAEnHQABJx6gAScfkAFHHCABRx0AAUceEwFHH5ABVxwwAVcdEAFXHiEBVx8AAUcMAgFXDAI=
+————-
+
+
+Original ConfigData decoded:
+
+01271C1001271D0001271EA001271F9001471C2001471D0001471E1301471F9001571C3001571D1001571E2101571F0001470C0201570C02
+————-
+
+Original ConfigData Broken down:
+
+01271C10 01271D00 01271EA0 01271F90 (Internal Mic)
+
+01471C20 01471D00 01471E13 01471F90 (Speakers)
+01571C30 01571D10 01571E21 01571F00 (Headphones)
+
+01470C02 (Set EAPD for speakers)
+01570C02 (Set EAPD for headphones)
+—————
+
+AMP control: AMP is at 0x0c, Amplified set Gain/Mute ix 0x3 (16bit payload).
+AMP setting (see payload format, 7.3.3.7 Amplifier Gain/Mute, p146, http://www.intel.com/content/dam/www/public/us/en/documents/product-specifications/high-definition-audio-specification.pdf)
+
+5180 = 01010001 10000000 = Mute right input amp
+6180 = 01100001 10000000 = Mute left input amp
+
+00C35180
+00C36180 
+————-
+
+New ConfigData (mute x2 appended):
+
+01271C1001271D0001271EA001271F9001471C2001471D0001471E1301471F9001571C3001571D1001571E2101571F0001470C0201570C0200C3518000C36180
+————-
+
+New ConfigData encoded Base64:
+
+ASccEAEnHQABJx6gAScfkAFHHCABRx0AAUceEwFHH5ABVxwwAVcdEAFXHiEBVx8AAUcMAgFXDAIAw1GAAMNhgA==
