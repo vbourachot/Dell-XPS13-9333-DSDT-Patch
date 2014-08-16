@@ -9,11 +9,12 @@ Method(DBG0, 1, NotSerialized)\n
 }\n
 end;
 
-into method label _Q8F parent_label EC0 code_regex . insert
-begin
-    \rmdt.p2("_Q8F", TPDS)\n
-    //Store(LNot(TPDS), TPDS)\n
-end;
+#into method label _Q8F parent_label EC0 code_regex . insert
+#begin
+#    \rmdt.p2("_Q8F", TPDS)\n
+#    //Store(LNot(TPDS), TPDS)\n
+#
+#end;
 
 
 # instrument _PTS and _WAK

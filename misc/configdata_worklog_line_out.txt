@@ -1,0 +1,45 @@
+From: https://git.kernel.org/cgit/linux/kernel/git/tiwai/sound.git/commit/?id=493a52a9b6645f61954580c7d4bd52fa62110934 
+
+Idea: If speaker node is the issue, remove it.
+ - Replace speaker in Platforms.xml with line out node (so applehda loads)
+ - Configure lineout in verbs as speaker --> NOK
+ - Remove speaker node and EAPD instruction from verbs --> NOK
+ - Remove mic input --> NOK
+Idea == Fail.
+-----
+
+Original ConfigData encoded Base64:
+
+ASccEAEnHQABJx6gAScfkAFHHCABRx0AAUceEwFHH5ABVxwwAVcdEAFXHiEBVx8AAUcMAgFXDAI=
+————-
+
+
+Original ConfigData decoded:
+
+01271C1001271D0001271EA001271F9001471C2001471D0001471E1301471F9001571C3001571D1001571E2101571F0001470C0201570C02
+————-
+
+Original ConfigData Broken down:
+
+01271C10 01271D00 01271EA0 01271F90 (Internal Mic)
+
+01471C20 01471D00 01471E13 01471F90 (Speakers)
+01571C30 01571D10 01571E21 01571F00 (Headphones)
+
+01470C02 (Set EAPD for speakers)
+01570C02 (Set EAPD for headphones)
+—————
+
+Add line out node, coded as speaker (line out is at 0x16)
+01671C40 01671D10 01671E13 01671F90
+
+-----
+
+New ConfigData (with line out inserted, mic/speaker + EAPD removed):
+
+01571C3001571D1001571E2101571F0001671C4001671D1001671E1301671F9001570C02
+————-
+
+New ConfigData encoded Base64:
+
+AVccMAFXHRABVx4hAVcfAAFnHEABZx0QAWceEwFnH5ABVwwC
