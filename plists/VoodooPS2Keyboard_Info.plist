@@ -143,32 +143,32 @@
 						</array>
 						<key>Function Keys Special</key>
 						<array>
-							<string>;The following 12 items map Fn+fkeys to fkeys</string>
+							<string>;The following 12 items map Fn+fkeys to Fn+fkeys</string>
 							<string>e06e=e06e</string>
-							<string>e008=e0f0</string>
-							<string>e01e=e037</string>
-							<string>e005=e0f2</string>
-							<string>e006=e0f1</string>
-							<string>e00c=40</string>
+							<string>e008=e008</string>
+							<string>e01e=e01e</string>
+							<string>e005=e005</string>
+							<string>e006=e006</string>
+							<string>e00c=e00c</string>
 							<string>;Fn+f7 no dedicated macro</string>
 							<string>e010=e010</string>
 							<string>e022=e022</string>
 							<string>e019=e019</string>
 							<string>e02e=e02e</string>
 							<string>e030=e030</string>
-							<string>;The following 12 items map fkeys to Fn+fkeys</string>
-							<string>3b=e06e;Map vidmirror key to f1</string>
-							<string>3c=e0f0;Map radio toggle action from EC query to f2</string>
-							<string>3d=e037;Map touchpad toggle button to f3</string>
-							<string>3e=e0f2;Map acpi RKA2 to f4 brightness down</string>
-							<string>3f=e0f1;Map acpi RKA1 to f5 brightness up</string>
-							<string>40=e0f3;Map acpi RKA3 to f6 keyboard backlight</string>
-							<string>;Fn+f7 no macro</string>
-							<string>42=e010</string>
-							<string>43=e022</string>
-							<string>44=e019</string>
-							<string>57=e02e</string>
-							<string>58=e030</string>
+							<string>;The following 12 items map fkeys to fkeys</string>
+							<string>3b=3b</string>
+							<string>3c=3c</string>
+							<string>3d=3d</string>
+							<string>3e=3e</string>
+							<string>3f=3f</string>
+							<string>40=40</string>
+							<string>41=41</string>
+							<string>42=42</string>
+							<string>43=43</string>
+							<string>44=44</string>
+							<string>57=57</string>
+							<string>58=58</string>
 						</array>
 						<key>Function Keys Standard</key>
 						<array>
