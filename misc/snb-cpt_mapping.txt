@@ -1,0 +1,43 @@
+BIOS set to function keys
+F1 to F13:
+ApplePS2Keyboard: sending key 3b=e06e, e06e=70 down
+ApplePS2Keyboard: sending key 3c=e0f0, e0f0=80 down
+ApplePS2Keyboard: sending key 3d=0, 0=80 down
+ApplePS2Keyboard: sending key 3e=e0f2, e0f2=91 down
+ApplePS2Keyboard: sending key 3f=e0f1, e0f1=90 down
+
+ApplePS2Keyboard: sending key 40=e0f3, e0f3=80 down
+
+ApplePS2Keyboard: sending key 41=62 down
+ApplePS2Keyboard: sending key 42=e010, e010=4d down
+ApplePS2Keyboard: sending key 43=e022, e022=34 down
+ApplePS2Keyboard: sending key 44=e019, e019=42 down
+ApplePS2Keyboard: sending key 57=e02e, e02e=49 down
+ApplePS2Keyboard: sending key 58=e030, e030=48 down
+ApplePS2Keyboard: sending key e020=4a down
+
+BIOS set to Multimedia keys - ACPI trace
+F1 to F13:
+F1: ACPIDebug: "EC _QF8 enter"
+F2: ACPIDebug: "EC _Q9F enter"
+F3: ACPIDebug: "EC _QF3 enter"
+F4: ACPIDebug: "EC _Q81 enter"
+F5: ACPIDebug: "EC _Q80 enter"
+F6: ACPIDebug: "EC _Q8A enter"
+F7 - Nothing
+F8 - Nothing
+F9 - Nothing
+F10 - Nothing
+F11: ACPIDebug: "EC _QA8 enter"
+F12: ACPIDebug: "EC _QA9 enter"
+F13: ACPIDebug: "EC _QA7 enter" (Mute working)
+
+BIOS set to Multimedia keys - PS2 trace
+F8: ApplePS2Keyboard: sending key e010=42, 42=64 down
+F9: ApplePS2Keyboard: sending key e022=43, 43=65 down
+F10: ApplePS2Keyboard: sending key e019=44, 44=6d down
+F11: ApplePS2Keyboard: sending key e02e=57, 57=67 down (behaves as F11)
+F12: ApplePS2Keyboard: sending key e030=58, 58=6f down (behaves as F12)
+F13: ApplePS2Keyboard: sending key e020=4a down (Mute working)
+
+
