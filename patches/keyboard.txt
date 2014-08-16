@@ -14,3 +14,17 @@ Method (_DSM, 4, NotSerialized)\n
     })\n
 }\n
 end;
+
+# Enable keyboard brightness control
+into method label _Q81 replace_content
+begin
+// Brightness Down\n
+    Notify(\_SB.PCI0.LPCB.PS2K, 0x0205)\n
+    Notify(\_SB.PCI0.LPCB.PS2K, 0x0285)\n
+end;
+into method label _Q80 replace_content
+begin
+// Brightness Up\n
+    Notify(\_SB.PCI0.LPCB.PS2K, 0x0206)\n
+    Notify(\_SB.PCI0.LPCB.PS2K, 0x0286)\n
+end;
