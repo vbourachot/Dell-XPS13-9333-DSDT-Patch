@@ -17,8 +17,7 @@
 # make install_config
 
 GFXSSDT=ssdt5
-ADDLSSDT1=ssdt1
-ADDLSSDT2=ssdt6
+ADDLSSDT1=ssdt6
 EFIDIR=/Volumes/EFI
 EFIVOL=/dev/disk0s1
 LAPTOPGIT=../Laptop-DSDT-Patch
@@ -27,7 +26,7 @@ EXTRADIR=/Extra
 BUILDDIR=./build
 PATCHED=./patched
 UNPATCHED=./unpatched
-PRODUCTS=$(BUILDDIR)/dsdt.aml $(BUILDDIR)/$(GFXSSDT).aml $(BUILDDIR)/$(ADDLSSDT1).aml $(BUILDDIR)/$(ADDLSSDT2).aml
+PRODUCTS=$(BUILDDIR)/dsdt.aml $(BUILDDIR)/$(GFXSSDT).aml $(BUILDDIR)/$(ADDLSSDT1).aml
 DISASSEMBLE_SCRIPT=./disassemble.sh
 
 PATCH_HDA_SCRIPT=./patch_hda.sh
@@ -51,9 +50,6 @@ $(BUILDDIR)/$(GFXSSDT).aml: $(PATCHED)/$(GFXSSDT).dsl
 $(BUILDDIR)/$(ADDLSSDT1).aml: $(PATCHED)/$(ADDLSSDT1).dsl
 	$(IASL) $(IASLFLAGS) -p $@ $<
 
-$(BUILDDIR)/$(ADDLSSDT2).aml: $(PATCHED)/$(ADDLSSDT2).dsl
-	$(IASL) $(IASLFLAGS) -p $@ $<
-
 clean:
 	rm -f $(PRODUCTS)
 	rm -rf $(BUILDDIR)/AppleHDA_$(HDACODEC).kext
@@ -74,13 +70,12 @@ install: $(PRODUCTS)
 	cp $(BUILDDIR)/dsdt.aml $(EFIDIR)/EFI/CLOVER/ACPI/patched
 	cp $(BUILDDIR)/$(GFXSSDT).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/ssdt-1.aml
 	cp $(BUILDDIR)/$(ADDLSSDT1).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/ssdt-2.aml
-	cp $(BUILDDIR)/$(ADDLSSDT2).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/ssdt-3.aml
 	diskutil unmount $(EFIDIR)
 	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi
 
 # Patch with 'patchmatic'
 patch:
-	cp $(UNPATCHED)/dsdt.dsl $(UNPATCHED)/$(GFXSSDT).dsl $(UNPATCHED)/$(ADDLSSDT1).dsl  $(UNPATCHED)/$(ADDLSSDT2).dsl $(PATCHED)
+	cp $(UNPATCHED)/dsdt.dsl $(UNPATCHED)/$(GFXSSDT).dsl $(UNPATCHED)/$(ADDLSSDT1).dsl $(PATCHED)
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl patches/syntax_dsdt.txt $(PATCHED)/dsdt.dsl
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/syntax/remove_DSM.txt $(PATCHED)/dsdt.dsl
 	$(PATCHMATIC) $(PATCHED)/$(GFXSSDT).dsl $(LAPTOPGIT)/syntax/remove_DSM.txt $(PATCHED)/$(GFXSSDT).dsl
@@ -105,17 +100,16 @@ patch:
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_PNOT.txt $(PATCHED)/dsdt.dsl
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_IMEI.txt $(PATCHED)/dsdt.dsl
 	# NOTE: From Dell 7000 thread
-	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_Shutdown2.txt $(PATCHED)/dsdt.dsl
+#	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_Shutdown2.txt $(PATCHED)/dsdt.dsl
 	# NOTE: From Dell 7000 thread
 	# $(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_ADP1.txt $(PATCHED)/dsdt.dsl
 
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/battery/battery_Dell-XPS-13.txt $(PATCHED)/dsdt.dsl
 
-patch_debug:
-	make patch
+patch_debug: patch
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(DEBUGGIT)/debug.txt $(PATCHED)/dsdt.dsl
-#	$(PATCHMATIC) $(PATCHED)/dsdt.dsl patches/debug.txt $(PATCHED)/dsdt.dsl
-	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(DEBUGGIT)/instrument_Qxx.txt $(PATCHED)/dsdt.dsl
+	#$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(DEBUGGIT)/instrument_Qxx.txt $(PATCHED)/dsdt.dsl
+	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(DEBUGGIT)/instrument_WAK_PTS.txt $(PATCHED)/dsdt.dsl
 
 disassemble:
 	$(DISASSEMBLE_SCRIPT)
@@ -175,7 +169,7 @@ null_eth:
 # Install null ethernet ssdt
 install_null_eth: null_eth
 	if [ ! -d $(EFIDIR) ]; then mkdir $(EFIDIR) && diskutil mount -mountPoint $(EFIDIR) $(EFIVOL); fi
-	cp $(BUILDDIR)/ssdt-rmne_rand_mac.aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/ssdt-4.aml
+	cp $(BUILDDIR)/ssdt-rmne_rand_mac.aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/ssdt-3.aml
 	diskutil unmount $(EFIDIR)
 	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi
 

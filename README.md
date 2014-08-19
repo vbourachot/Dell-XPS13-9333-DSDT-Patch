@@ -8,15 +8,17 @@ TODO:
 Done:
  - Clover config.plist for XPS 13 9333
  - AppleHDA patching and injection for ALC668 
- - Compllete DSDT patching (backlight, battery, graphics, sleep, miniDP, ...)
+ - Complete DSDT patching (backlight, battery, graphics, sleep, miniDP, ...)
  - Custom Info.plist for codec commander and fakesmc
 
-Note: Replace linux_native contents with your own extract before patching
-Note 2: Review and configure Makefile variables before using.
+Notes: 
+ - Replace linux_native contents with your own extract before patching
+ - Review and configure Makefile variables before using
 
 http://www.tonymacx86.com/mavericks-laptop-support/136988-dell-xps-13-9333-haswell-clover-install-dsdt-guide.html
 
-Original readme follows
+
+Original readme follows:
 
 ## Lenovo Haswell U430 DSDT patches by RehabMan
 
