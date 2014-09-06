@@ -179,6 +179,26 @@
 				AVhY
 				</data>
 			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>2nd stage boot patch 1</string>
+				<key>Name</key>
+				<string>IOGraphicsFamily</string>
+				<key>Find</key>
+				<string>85C0745D48</string>
+				<key>Replace</key>
+				<string>31C0745B48</string>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>2nd stage boot patch 2</string>
+				<key>Name</key>
+				<string>IOGraphicsFamily</string>
+				<key>Find</key>
+				<string>4188C4EB03</string>
+				<key>Replace</key>
+				<string>4188C4EB23</string>
+			</dict>
 		</array>
 	</dict>
 	<key>SystemParameters</key>

@@ -121,9 +121,9 @@
 					<key>SNB-CPT</key>
 					<dict>
 						<key>ActionSwipeDown</key>
-						<string>63 d, 63 u</string>
+						<string>3b d, 7d d, 7d u, 3b u</string>
 						<key>ActionSwipeUp</key>
-						<string>61 d, 61 u</string>
+						<string>3b d, 7e d, 7e u, 3b u</string>
 						<key>Breakless PS2</key>
 						<array>
 							<string>e01e;Touchpad Fn+f3 is breakless</string>

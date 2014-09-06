@@ -1,0 +1,24 @@
+			<dict>
+				<key>Name</key>
+				<string>AirPortBrcm4360</string>
+				<key>Comment</key>
+				<string>BCM94352 WIFI Info patch - Expect 1 match</string>
+				<key>InfoPlistPatch</key>
+				<true/>
+				<key>Find</key>
+				<string>pci14e4,43a0</string>
+				<key>Replace</key>
+				<string>pci14e4,43b1</string>
+			</dict>
+			<dict>
+				<key>Name</key>
+				<string>BroadcomBluetoothHostControllerUSBTransport</string>
+				<key>Comment</key>
+				<string>BCM94352 BT Info patch - Expect 1 match</string>
+				<key>InfoPlistPatch</key>
+				<true/>
+				<key>Find</key>
+				<string>8680</string>
+				<key>Replace</key>
+				<string>????</string>
+			</dict>
