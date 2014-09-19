@@ -28,6 +28,7 @@ PATCHED=./patched
 UNPATCHED=./unpatched
 PRODUCTS=$(BUILDDIR)/dsdt.aml $(BUILDDIR)/$(GFXSSDT).aml $(BUILDDIR)/$(ADDLSSDT1).aml
 DISASSEMBLE_SCRIPT=./disassemble.sh
+OSXV=10.10
 
 PATCH_HDA_SCRIPT=./patch_hda.sh
 HDACODEC=ALC668
@@ -99,10 +100,6 @@ patch:
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_Mutex.txt $(PATCHED)/dsdt.dsl
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_PNOT.txt $(PATCHED)/dsdt.dsl
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_IMEI.txt $(PATCHED)/dsdt.dsl
-	# NOTE: From Dell 7000 thread
-#	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_Shutdown2.txt $(PATCHED)/dsdt.dsl
-	# NOTE: From Dell 7000 thread
-	# $(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_ADP1.txt $(PATCHED)/dsdt.dsl
 
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/battery/battery_Dell-XPS-13.txt $(PATCHED)/dsdt.dsl
 
@@ -140,24 +137,24 @@ install_config:
 # Install CodecCommander custom Info.plist
 install_plist_cc: 
 	if [ ! -d $(EFIDIR) ]; then mkdir $(EFIDIR) && diskutil mount -mountPoint $(EFIDIR) $(EFIVOL); fi
-	cp ./plists/CodecCommander_Info.plist $(EFIDIR)/EFI/CLOVER/kexts/10.9/CodecCommander.kext/Contents/Info.plist
-	touch $(EFIDIR)/EFI/CLOVER/kexts/10.9/CodecCommander.kext
+	cp ./plists/CodecCommander_Info.plist $(EFIDIR)/EFI/CLOVER/kexts/$(OSXV)/CodecCommander.kext/Contents/Info.plist
+	touch $(EFIDIR)/EFI/CLOVER/kexts/$(OSXV)/CodecCommander.kext
 	diskutil unmount $(EFIDIR)
 	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi
 
 # Install FakeSMC custom Info.plist
 install_plist_smc: 
 	if [ ! -d $(EFIDIR) ]; then mkdir $(EFIDIR) && diskutil mount -mountPoint $(EFIDIR) $(EFIVOL); fi
-	cp ./plists/FakeSMC_Info.plist $(EFIDIR)/EFI/CLOVER/kexts/10.9/FakeSMC.kext/Contents/Info.plist
-	touch $(EFIDIR)/EFI/CLOVER/kexts/10.9/FakeSMC.kext
+	cp ./plists/FakeSMC_Info.plist $(EFIDIR)/EFI/CLOVER/kexts/$(OSXV)/FakeSMC.kext/Contents/Info.plist
+	touch $(EFIDIR)/EFI/CLOVER/kexts/$(OSXV)/FakeSMC.kext
 	diskutil unmount $(EFIDIR)
 	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi
 
 # Install VoodooPS2Keyboard custom Info.plist
 install_plist_kb:
 	if [ ! -d $(EFIDIR) ]; then mkdir $(EFIDIR) && diskutil mount -mountPoint $(EFIDIR) $(EFIVOL); fi
-	cp ./plists/VoodooPS2Keyboard_Info.plist $(EFIDIR)/EFI/CLOVER/kexts/10.9/VoodooPS2Controller.kext/Contents/PlugIns/VoodooPS2Keyboard.kext/Contents/Info.plist
-	touch $(EFIDIR)/EFI/CLOVER/kexts/10.9/VoodooPS2Controller.kext
+	cp ./plists/VoodooPS2Keyboard_Info.plist $(EFIDIR)/EFI/CLOVER/kexts/$(OSXV)/VoodooPS2Controller.kext/Contents/PlugIns/VoodooPS2Keyboard.kext/Contents/Info.plist
+	touch $(EFIDIR)/EFI/CLOVER/kexts/$(OSXV)/VoodooPS2Controller.kext
 	diskutil unmount $(EFIDIR)
 	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi
 

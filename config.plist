@@ -143,13 +143,9 @@
 				<key>Comment</key>
 				<string>Trim Enabler</string>
 				<key>Find</key>
-				<data>
-				QVBQTEUgU1NE
-				</data>
+				<data>QVBQTEUgU1NE</data>
 				<key>Replace</key>
-				<data>
-				AAAAAAAAAAAA
-				</data>
+				<data>AAAAAAAAAAAA</data>
 			</dict>
 			<dict>
 				<key>Name</key>
@@ -157,13 +153,9 @@
 				<key>Comment</key>
 				<string>Airport - 3rd party card</string>
 				<key>Find</key>
-				<data>
-				MGsQAAB1DQ==
-				</data>
+				<data>MGsQAAB1DQ==</data>
 				<key>Replace</key>
-				<data>
-				MGsQAAB0DQ==
-				</data>
+				<data>MGsQAAB0DQ==</data>
 			</dict>
 			<dict>
 				<key>Name</key>
@@ -171,13 +163,9 @@
 				<key>Comment</key>
 				<string>BCM4352 5GHZ</string>
 				<key>Find</key>
-				<data>
-				AVhU
-				</data>
+				<data>AVhU</data>
 				<key>Replace</key>
-				<data>
-				AVhY
-				</data>
+				<data>AVhY</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
