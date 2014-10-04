@@ -129,7 +129,8 @@ install_config:
 	if [ -f ./config.plist.smbios ]; then \
 		./config_append_smbios.sh && cp ./config.plist.local $(EFIDIR)/EFI/CLOVER/config.plist; \
 		diff ./config.plist $(EFIDIR)/EFI/CLOVER/config.plist || exit 0; \
-	else cp ./config.plist $(EFIDIR)/EFI/CLOVER/; \
+	else \
+		cp ./config.plist $(EFIDIR)/EFI/CLOVER/; \
 	fi
 	diskutil unmount $(EFIDIR)
 	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi

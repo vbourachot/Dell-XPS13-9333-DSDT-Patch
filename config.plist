@@ -18,13 +18,15 @@
 	<key>Boot</key>
 	<dict>
 		<key>Arguments</key>
-		<string>dart=0</string>
+		<string>dart=0 kext-dev-mode=1</string>
 		<key>Log</key>
 		<false/>
 		<key>Timeout</key>
-		<integer>5</integer>
+		<integer>2</integer>
 		<key>Secure</key>
 		<false/>
+		<key>DefaultVolume</key>
+		<string>Yosemite</string>
 	</dict>
 	<key>Graphics</key>
 	<dict>
@@ -146,26 +148,6 @@
 				<data>QVBQTEUgU1NE</data>
 				<key>Replace</key>
 				<data>AAAAAAAAAAAA</data>
-			</dict>
-			<dict>
-				<key>Name</key>
-				<string>AirPortBrcm4360</string>
-				<key>Comment</key>
-				<string>Airport - 3rd party card</string>
-				<key>Find</key>
-				<data>MGsQAAB1DQ==</data>
-				<key>Replace</key>
-				<data>MGsQAAB0DQ==</data>
-			</dict>
-			<dict>
-				<key>Name</key>
-				<string>AirPortBrcm4360</string>
-				<key>Comment</key>
-				<string>BCM4352 5GHZ</string>
-				<key>Find</key>
-				<data>AVhU</data>
-				<key>Replace</key>
-				<data>AVhY</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
