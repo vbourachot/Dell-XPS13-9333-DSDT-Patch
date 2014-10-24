@@ -1,0 +1,21 @@
+Jump in 10.9.4
+000000000000328a         cmp        edi, 0xa168086                              ; XREF=__ZL13loadIcbeDylibj+432
+0000000000003290         je         0x32ba
+
+00000000000032ba         lea        rdi, qword [ds:0x8bc2]                      ; "/System/Library/Extensions/AppleIntelHD5000GraphicsGLDriver.bundle/Contents/MacOS/iCBE.dylib", XREF=__ZL13loadIcbeDylibj+492, __ZL13loadIcbeDylibj+504, __ZL13loadIcbeDylibj+516, __ZL13loadIcbeDylibj+539, __ZL13loadIcbeDylibj+550, __ZL13loadIcbeDylibj+567, __ZL13loadIcbeDylibj+584, __ZL13loadIcbeDylibj+601, __ZL13loadIcbeDylibj+618, __ZL13loadIcbeDylibj+635, __ZL13loadIcbeDylibj+900, …
+
+jump in 10.10
+
+0000000000002985         lea        rdi, qword [ds:0xf182]                      ; "/System/Library/Extensions/AppleIntelHD5000GraphicsGLDriver.bundle/Contents/MacOS/iCBE.dylib", XREF=__ZL13loadIcbeDylibj+130, __ZL13loadIcbeDylibj+146, __ZL13loadIcbeDylibj+156, __ZL13loadIcbeDylibj+164
+
+
+
+compileIGILtodevicebinary end jump in 10.9.4. (common to all removed mobile hd4k and desktop hd46)
+0000000000005b62         mov        dword [ss:rbp+var_50], 0xe                  ; XREF=__ZL25compileIGILToDeviceBinaryPKcmS0_mjjjRPcRmS2_+949, __ZL25compileIGILToDeviceBinaryPKcmS0_mjjjRPcRmS2_+960, __ZL25compileIGILToDeviceBinaryPKcmS0_mjjjRPcRmS2_+971, __ZL25compileIGILToDeviceBinaryPKcmS0_mjjjRPcRmS2_+993, __ZL25compileIGILToDeviceBinaryPKcmS0_mjjjRPcRmS2_+1003, __ZL25compileIGILToDeviceBinaryPKcmS0_mjjjRPcRmS2_+1019, __ZL25compileIGILToDeviceBinaryPKcmS0_mjjjRPcRmS2_+1035, __ZL25compileIGILToDeviceBinaryPKcmS0_mjjjRPcRmS2_+1051, __ZL25compileIGILToDeviceBinaryPKcmS0_mjjjRPcRmS2_+1067, __ZL25compileIGILToDeviceBinaryPKcmS0_mjjjRPcRmS2_+1212, __ZL25compileIGILToDeviceBinaryPKcmS0_mjjjRPcRmS2_+1224, …
+
+
+
+
+Candidates for patching in 10.10 loadIGCE (anything else jumps out)
+0000000000002949         cmp        edi, 0xa268085                              ; XREF=__ZL13loadIcbeDylibj+75
+0000000000002951         cmp        edi, 0x4128086
