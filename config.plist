@@ -169,6 +169,32 @@
 				<key>Replace</key>
 				<string>4188C4EB23</string>
 			</dict>
+			<dict>
+				<key>Name</key>
+				<string>AirPortBrcm4360</string>
+				<key>Comment</key>
+				<string>BCM4352 WLAN Info patch</string>
+				<key>InfoPlistPatch</key>
+				<true/>
+				<key>Find</key>
+				<string>pci14e4,43a0</string>
+				<key>Replace</key>
+				<string>pci14e4,43b1</string>
+			</dict>
+			<dict>
+				<key>Name</key>
+				<string>AirPortBrcm4360</string>
+				<key>Comment</key>
+				<string>BCM4352 WLAN 5GHz US</string>
+				<key>Find</key>
+				<string>5854002B182C210020</string>
+				<key>Replace</key>
+				<string>5553080A361C47000A</string>
+			</dict>
+		</array>
+		<key>ForceKextsToLoad</key>
+		<array>
+			<string>\System\Library\Extensions\IO80211Family.kext</string>
 		</array>
 	</dict>
 	<key>SystemParameters</key>
@@ -180,6 +206,8 @@
 	<dict>
 		<key>ProductName</key>
 		<string>MacBookAir6,2</string>
+		<key>BiosVersion</key>
+		<string>MBA61.88Z.0099.B12.1405241030</string>
 	</dict>
 </dict>
 </plist>
