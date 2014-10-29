@@ -40,32 +40,33 @@ IASLFLAGS=-vr -w1
 IASL=/usr/local/bin/iasl
 PATCHMATIC=/usr/local/bin/patchmatic
 
+XMLLINT=xmllint --valid --noout
+
+# Compile DSDT/SSDTs
 all: $(PRODUCTS)
 
 $(BUILDDIR)/dsdt.aml: $(PATCHED)/dsdt.dsl
 	$(IASL) $(IASLFLAGS) -p $@ $<
-	
+
 $(BUILDDIR)/$(GFXSSDT).aml: $(PATCHED)/$(GFXSSDT).dsl
 	$(IASL) $(IASLFLAGS) -p $@ $<
 
 $(BUILDDIR)/$(ADDLSSDT1).aml: $(PATCHED)/$(ADDLSSDT1).dsl
 	$(IASL) $(IASLFLAGS) -p $@ $<
 
+
+# Clean everything but the disassembled unpatched dsdt
 clean:
 	rm -f $(PRODUCTS)
 	rm -rf $(BUILDDIR)/AppleHDA_$(HDACODEC).kext
 	rm -f $(PATCHED)/*.dsl
 
+# Clean everything
 distclean: clean
 	rm -f $(UNPATCHED)/*.dsl
 
-# Chameleon Install - NOT TESTED
-install_extra: $(PRODUCTS)
-	-rm $(EXTRADIR)/ssdt-*.aml
-	cp $(BUILDDIR)/dsdt.aml $(EXTRADIR)/dsdt.aml
-	cp $(BUILDDIR)/$(GFXSSDT).aml $(EXTRADIR)/ssdt-1.aml
 
-# Clover Install
+# Clover Install DSDT/SSDTs
 install: $(PRODUCTS)
 	if [ ! -d $(EFIDIR) ]; then mkdir $(EFIDIR) && diskutil mount -mountPoint $(EFIDIR) $(EFIVOL); fi
 	cp $(BUILDDIR)/dsdt.aml $(EFIDIR)/EFI/CLOVER/ACPI/patched
@@ -108,13 +109,16 @@ patch_debug: patch
 	#$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(DEBUGGIT)/instrument_Qxx.txt $(PATCHED)/dsdt.dsl
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(DEBUGGIT)/instrument_WAK_PTS.txt $(PATCHED)/dsdt.dsl
 
+# Disassemble DSDT/SSDTs from linux_native/ acpi extract
 disassemble:
 	$(DISASSEMBLE_SCRIPT)
 
 
-patch_hda: 
+# Patch AppleHDA for ALC668 codec
+patch_hda:
 	$(PATCH_HDA_SCRIPT)
 
+# Install AppleHDA_ALC668.kext injector in SLE
 install_hda:
 	if [ -d /System/Library/Extensions/AppleHDA_$(HDACODEC).kext ]; \
 	then rm -rf /System/Library/Extensions/AppleHDA_$(HDACODEC).kext && cp -R $(BUILDDIR)/AppleHDA_$(HDACODEC).kext /System/Library/Extensions/; \
@@ -124,10 +128,16 @@ install_hda:
 
 # Install Clover config.plist
 # Appends smbios info if ./config.plist.smbios exists
-install_config: 
+install_config:
+	if [ -f ./config.plist.smbios ]; then \
+		./config_append_smbios.sh && \
+		$(XMLLINT) ./config.plist.local; \
+	else \
+		$(XMLLINT) ./config.plist; \
+	fi
 	if [ ! -d $(EFIDIR) ]; then mkdir $(EFIDIR) && diskutil mount -mountPoint $(EFIDIR) $(EFIVOL); fi
 	if [ -f ./config.plist.smbios ]; then \
-		./config_append_smbios.sh && cp ./config.plist.local $(EFIDIR)/EFI/CLOVER/config.plist; \
+		cp ./config.plist.local $(EFIDIR)/EFI/CLOVER/config.plist; \
 		diff ./config.plist $(EFIDIR)/EFI/CLOVER/config.plist || exit 0; \
 	else \
 		cp ./config.plist $(EFIDIR)/EFI/CLOVER/; \
@@ -135,8 +145,10 @@ install_config:
 	diskutil unmount $(EFIDIR)
 	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi
 
+
 # Install CodecCommander custom Info.plist
-install_plist_cc: 
+install_plist_cc:
+	$(XMLLINT) ./plists/CodecCommander_Info.plist
 	if [ ! -d $(EFIDIR) ]; then mkdir $(EFIDIR) && diskutil mount -mountPoint $(EFIDIR) $(EFIVOL); fi
 	cp ./plists/CodecCommander_Info.plist $(EFIDIR)/EFI/CLOVER/kexts/$(OSXV)/CodecCommander.kext/Contents/Info.plist
 	touch $(EFIDIR)/EFI/CLOVER/kexts/$(OSXV)/CodecCommander.kext
@@ -144,7 +156,8 @@ install_plist_cc:
 	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi
 
 # Install FakeSMC custom Info.plist
-install_plist_smc: 
+install_plist_smc:
+	$(XMLLINT) ./plists/FakeSMC_Info.plist
 	if [ ! -d $(EFIDIR) ]; then mkdir $(EFIDIR) && diskutil mount -mountPoint $(EFIDIR) $(EFIVOL); fi
 	cp ./plists/FakeSMC_Info.plist $(EFIDIR)/EFI/CLOVER/kexts/$(OSXV)/FakeSMC.kext/Contents/Info.plist
 	touch $(EFIDIR)/EFI/CLOVER/kexts/$(OSXV)/FakeSMC.kext
@@ -153,11 +166,13 @@ install_plist_smc:
 
 # Install VoodooPS2Keyboard custom Info.plist
 install_plist_kb:
+	$(XMLLINT) ./plists/VoodooPS2Keyboard_Info.plist
 	if [ ! -d $(EFIDIR) ]; then mkdir $(EFIDIR) && diskutil mount -mountPoint $(EFIDIR) $(EFIVOL); fi
 	cp ./plists/VoodooPS2Keyboard_Info.plist $(EFIDIR)/EFI/CLOVER/kexts/$(OSXV)/VoodooPS2Controller.kext/Contents/PlugIns/VoodooPS2Keyboard.kext/Contents/Info.plist
 	touch $(EFIDIR)/EFI/CLOVER/kexts/$(OSXV)/VoodooPS2Controller.kext
 	diskutil unmount $(EFIDIR)
 	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi
+
 
 # Compile ssdt for null ethernet
 null_eth:
