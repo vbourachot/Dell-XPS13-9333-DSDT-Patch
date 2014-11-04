@@ -191,10 +191,21 @@
 				<key>Replace</key>
 				<string>5553080A361C47000A</string>
 			</dict>
+			<dict>
+				<key>Name</key>
+				<string>AirPortBrcm4360</string>
+				<key>Comment</key>
+				<string>Airport - 3rd party card fix</string>
+				<key>Find</key>
+				<string>6B100000750D</string>
+				<key>Replace</key>
+				<string>6B1000009090</string>
+			</dict>
 		</array>
 		<key>ForceKextsToLoad</key>
 		<array>
 			<string>\System\Library\Extensions\IO80211Family.kext</string>
+			<string>\System\Library\Extensions\IONetworkingFamily.kext</string>
 		</array>
 	</dict>
 	<key>SystemParameters</key>

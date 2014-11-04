@@ -36,11 +36,13 @@ HDACODEC=ALC668
 NULLETHDIR=./null_eth
 PATCH_RMNE_SCRIPT=./patch_null_eth_mac.sh
 
-IASLFLAGS=-vr -w1
+IASLFLAGSVERBOSE=-vr -w1
+IASLFLAGS=-ve
 IASL=/usr/local/bin/iasl
 PATCHMATIC=/usr/local/bin/patchmatic
 
 XMLLINT=xmllint --valid --noout
+#XMLLINT=touch
 
 # Compile DSDT/SSDTs
 all: $(PRODUCTS)
