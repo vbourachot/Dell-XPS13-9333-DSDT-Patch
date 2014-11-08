@@ -1,0 +1,18 @@
+# Remove this instruction from _WAK which kills touchpad on wake:
+#            Store (OSTY, \_SB.PCI0.LPCB.EC0.ACOS)
+
+into method label _WAK code_regex Store\s+\(OSTY,\s+\\_SB\.PCI0\.LPCB\.EC0\.ACOS\) remove_matched;
+
+# Remove 2 empty PTS/WAK (NOT _PTS/_WAK) methods at root of the DSDT namespace
+#    Method (PTS, 1, NotSerialized)
+#    {
+#        If (Arg0) {}
+#    }
+#
+#    Method (WAK, 1, NotSerialized)
+#    {
+#    }
+
+into method label PTS remove_entry;
+into method label WAK remove_entry;
+

@@ -1,0 +1,5 @@
+# From: the-darkvoid
+
+into device label GLAN remove_entry;
+into method label _L6D parent_label _GPE code_regex .*GLAN.* remove_matched;
+

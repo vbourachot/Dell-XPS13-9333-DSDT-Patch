@@ -74,8 +74,17 @@
 	</dict>
 	<key>ACPI</key>
 	<dict>
+		<key>Fixes</key>
+		<dict>
+			<key>FixRegions_10000000</key>
+			<true/>
+			<key>NewWay_80000000</key>
+			<true/>
+		</dict>
 		<key>DSDT</key>
 		<dict>
+			<key>Name</key>
+			<string>dsdt.aml</string>
 			<key>Debug</key>
 			<false/>
 			<key>ReuseFFFF</key>
@@ -200,6 +209,16 @@
 				<string>6B100000750D</string>
 				<key>Replace</key>
 				<string>6B1000009090</string>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>IOBluetoothFamily - Continuity &amp; Hand-off</string>
+				<key>Find</key>
+				<data>i4eMAQAA</data>
+				<key>Name</key>
+				<string>IOBluetoothFamily</string>
+				<key>Replace</key>
+				<data>uA8AAACQ</data>
 			</dict>
 		</array>
 		<key>ForceKextsToLoad</key>

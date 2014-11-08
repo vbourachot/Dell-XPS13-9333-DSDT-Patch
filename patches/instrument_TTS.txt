@@ -1,0 +1,10 @@
+# Create _TTS method to trace sleep/wake initiation
+# ACPI spec:
+# The _TTS control method is executed by the OSPM at the beginning of the sleep transition process for S1, S2, S3, S4, and orderly S5 shutdown.
+# The _TTS control method is executed by the OSPM at the beginning of the sleep transition process for S1, S2, S3, S4, and orderly S5 shutdown
+
+into method label _TTS remove_entry;
+into definitionblock code_regex . insert
+begin
+Method (_TTS, 1, NotSerialized) { \rmdt.p2("_TTS enter with state", Arg0) }\n
+end;
