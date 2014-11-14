@@ -74,13 +74,6 @@
 	</dict>
 	<key>ACPI</key>
 	<dict>
-		<key>Fixes</key>
-		<dict>
-			<key>FixRegions_10000000</key>
-			<true/>
-			<key>NewWay_80000000</key>
-			<true/>
-		</dict>
 		<key>DSDT</key>
 		<dict>
 			<key>Name</key>
@@ -89,7 +82,7 @@
 			<false/>
 			<key>ReuseFFFF</key>
 			<false/>
-			<key>DropOEM_DSM</key>
+			<key>Rtc8Allowed</key>
 			<true/>
 		</dict>
 		<key>SSDT</key>

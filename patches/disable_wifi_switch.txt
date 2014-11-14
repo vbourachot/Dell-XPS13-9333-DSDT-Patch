@@ -1,0 +1,5 @@
+# Disable multimedia key F2 WiFi switch
+into method label _Q9F code_regex ([\s\S]*) replace_matched
+begin
+//nothing
+end;
