@@ -1,0 +1,18 @@
+# Create SMCD device for HWMonitor
+into device label SMCD remove_entry;
+into definitionblock code_regex . insert
+begin
+    Device (SMCD)\n
+    {\n
+        Name (_HID, "MON0000")  // _HID: Hardware ID\n
+    }\n
+end;
+
+# Add fan readings
+into device label SMCD insert
+begin
+        Method (FAN0, 0, NotSerialized)\n
+        {\n
+            Return (Or (\_SB.PCI0.LPCB.EC0.FANL, ShiftLeft (\_SB.PCI0.LPCB.EC0.FANH, 8)))\n
+        }\n
+end;

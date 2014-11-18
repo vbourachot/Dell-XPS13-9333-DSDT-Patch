@@ -113,6 +113,16 @@
 		<array>
 			<dict>
 				<key>Name</key>
+				<string>AppleIntelFramebufferAzul</string>
+				<key>Comment</key>
+				<string>0x0a260006 6->9MB cursor bytes patch</string>
+				<key>Find</key>
+				<string>0600260a01030303000000020000300100006000</string>
+				<key>Replace</key>
+				<string>0600260a01030303000000020000300100009000</string>
+			</dict>
+			<dict>
+				<key>Name</key>
 				<string>AppleHDA</string>
 				<key>Comment</key>
 				<string>Expect 2 matches</string>

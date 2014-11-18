@@ -11,8 +11,8 @@
 
 
 # in Scope (_SB.PCI0)
-#into method label _INI parent_label _SB.PCI0 code_regex If\s+\(_OSI\s+\(\"Windows\s2012\"\)\) replaceall_matched
-#begin If(LOr(_OSI("Darwin"),_OSI("Windows 2012"))) end;
+into method label _INI parent_label _SB.PCI0 code_regex If\s+\(_OSI\s+\(\"Windows\s2012\"\)\) replaceall_matched
+begin If(LOr(_OSI("Darwin"),_OSI("Windows 2012"))) end;
 
-into method label _INI parent_label _SB.PCI0 code_regex If\s+\(_OSI\s+\(\"Linux\"\)\) replaceall_matched
-begin If(LOr(_OSI("Darwin"),_OSI("Linux"))) end;
+#into method label _INI parent_label _SB.PCI0 code_regex If\s+\(_OSI\s+\(\"Linux\"\)\) replaceall_matched
+#begin If(LOr(_OSI("Darwin"),_OSI("Linux"))) end;
