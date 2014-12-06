@@ -123,6 +123,16 @@
 			</dict>
 			<dict>
 				<key>Name</key>
+				<string>AppleIntelFramebufferAzul</string>
+				<key>Comment</key>
+				<string>Disable AppleIntelMEIDriver (jmp)</string>
+				<key>Find</key>
+				<string>FF90D005000084C00F8460020000498B07</string>
+				<key>Replace</key>
+				<string>FF90D0050000E940000000909090498B07</string>
+			</dict>
+			<dict>
+				<key>Name</key>
 				<string>AppleHDA</string>
 				<key>Comment</key>
 				<string>Expect 2 matches</string>

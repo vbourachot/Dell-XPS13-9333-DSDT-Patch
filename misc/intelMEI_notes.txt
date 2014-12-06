@@ -1,0 +1,49 @@
+Crude way to remove MEI driver - on boot:
+ sudo kextunload -c AppleIntelMEIDriver -v 5
+--> doesn't work
+
+---
+Kext patch to jump to 'disabled by plist' path:
+perl -pi -e 's|\xFF\x90\xD0\x05\x00\x00\x84\xC0\x0F\x84\x60\x02\x00\x00\x49\x8B\x07|\xFF\x90\xD0\x05\x00\x00\xE9\x40\x00\x00\x00\x90\x90\x90\x49\x8B\x07|sg' ./AppleIntelFramebufferAzul
+
+-- Original:
+
+__ZN19AppleIntelMEIDriver5startEP9IOService:        // AppleIntelMEIDriver::start(IOService*)
+[...]
+0000000000029e08         call       qword [ds:rax+0x5d0]
+0000000000029e0e         test       al, al
+0000000000029e10         je         0x2a076
+
+0000000000029e16         mov        rax, qword [ds:r15]
+[...]
+0000000000029e53         lea        rdi, qword [ds:0x3dd7a] ; "ME Driver disabled via plist\\n", argument #1
+0000000000029e5a         xor        ebx, ebx
+0000000000029e5c         xor        eax, eax
+0000000000029e5e         call       0x29e63
+0000000000029e63         jmp        0x2a078                 ; XREF=__ZN19AppleIntelMEIDriver5startEP9IOService+114
+
+-- Patched (jump to 'disabled by plist)
+0000000000029e08         call       qword [ds:rax+0x5d0]
+0000000000029e0e         jmp        0x29e53 // <-- HERE
+0000000000029e13         nop        
+0000000000029e14         nop        
+0000000000029e15         nop        
+0000000000029e16         mov        rax, qword [ds:r15]
+[...]
+0000000000029e53         lea        rdi, qword [ds:0x3dd7a] ; "ME Driver disabled via plist\\n", argument #1, XREF=__ZN19AppleIntelMEIDriver5startEP9IOService+34
+0000000000029e5a         xor        ebx, ebx
+0000000000029e5c         xor        eax, eax
+0000000000029e5e         call       0x29e63
+
+Result:
+1583:    | |   | +-o AppleIntelMEIDriver  <class AppleIntelMEIDriver, id 0x1000002c4, !registered, !matched, active, busy 0, retain 4>
+1584-    | |   |     {
+1585-    | |   |     }
+
+MEI driver loaded and attached to IMEI device  but NOT registered, NOT matched
+--> Sleep works after 3+ hours!
+
+---
+AppleMEClientController::uploadDMAEntry
+responsible for printing 'hmm.. mismatch sizes' on boot
+
