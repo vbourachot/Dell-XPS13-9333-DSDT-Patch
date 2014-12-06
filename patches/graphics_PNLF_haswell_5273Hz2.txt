@@ -1,0 +1,205 @@
+#Maintained by: RehabMan for: Laptop Patches
+#graphics_PNLF_haswell.txt
+
+# This patch enables the brightness slider in SysPrefs->Displays
+# and will also enable activation of sleep mode by closing
+# the laptop lid.
+#
+# This particular version is intended to be used with ACPIBacklight.kext
+# although it can also be used with AppleBacklight.kext,
+# provided AppleBacklight.kext is patched to recognize your 
+# display or an injector is used to set brightness levels.
+#
+# See this thread for more information:
+#     http://www.tonymacx86.com/hp-probook-mavericks/121031-native-brightness-working-without-blinkscreen-using-patched-applebacklight-kext.html
+# (also read any linked threads)
+#
+# Note: This patch should be applied to the DSDT or SSDT that defines
+# your integrated graphics device (always at _ADR 0x00020000)
+#
+
+into_all device label PNLF remove_entry;
+#into_all device name_adr 0x00020000 code_regex (OperationRegion\s\(IGD2,\sPCI_Config[^\}]*\}) remove_matched;
+into_all device name_adr 0x00020000 code_regex (OperationRegion\s\(RMPC,\sPCI_Config[^\}]*\}) remove_matched;
+
+into device name_adr 0x00020000 insert
+begin
+    OperationRegion (RMPC, PCI_Config, 0x10, 4)\n
+    Field (RMPC, AnyAcc, NoLock, Preserve)\n
+    {\n
+        BAR1,32,\n
+    }\n
+    Device (PNLF)\n
+    {\n
+        // normal PNLF declares (note some of this probably not necessary)\n
+        Name (_ADR, Zero)\n
+        Name (_HID, EisaId ("APP0002"))\n
+        Name (_CID, "backlight")\n
+        Name (_UID, 10)\n
+        Name (_STA, 0x0B)\n
+        //define hardware register access for brightness\n
+        // you can see BAR1 value in RW-Everything under Bus00,02 Intel VGA controler PCI\n
+        // Note: Not sure which one is right here... for now, going with BAR1 masked\n
+        //OperationRegion (BRIT, SystemMemory, Subtract(^BAR1, 4), 0xe1184)\n
+        OperationRegion (BRIT, SystemMemory, And(^BAR1, Not(0xF)), 0xe1184)\n
+        Field (BRIT, AnyAcc, Lock, Preserve)\n
+        {\n
+            Offset(0x48250),\n
+            LEV2, 32,\n
+            LEVL, 32,\n
+            Offset(0x70040),\n
+            P0BL, 32,\n
+            Offset(0xc8250),\n
+            LEVW, 32,\n
+            LEVX, 32,\n
+            Offset(0xe1180),\n
+            PCHL, 32,\n
+        }\n
+        Method (_INI, 0, NotSerialized)\n
+        {\n
+            // If the BIOS actually sets the values prior to boot, this would be\n
+            // how (maybe) to capture them.  My Envy does not have the capability\n
+            // to set brightness and I find these values are not set.\n
+            // The current value could also be in LEVL, and probably is even\n
+            // though OS X seems to manipulate only the low 16-bits of LEVX to\n
+            // change brightness.\n
+            // Because the low-order 16-bits are set to zero on the Envy, enabling\n
+            // this code causes a blank screen before the login screena appears.\n
+            //\n
+            //Store(LEVX, Local0)\n
+            //Store(ShiftRight(Local0,16), Local1)\n
+            //Store(And(Local0,0xFFFF), Local2)\n
+            //Divide(Multiply(Local2, 0xad9), Local1, Local0)\n
+            //Or(Local0, 0xad90000, Local0)\n
+            //\n
+            //REVIEW: wait for vblank to change things\n
+            //While(LEqual (P0BL, Local1)) {}\n
+            //\n
+            // This is part of the "keep startup level"...\n
+            // see comment above.\n
+            //Store(Local0, LEVX)\n
+            //\n
+            // This 0xC value comes from looking what OS X initializes this\n
+            // register to after display sleep (using ACPIDebug/ACPIPoller)\n
+            Store(0xC0000000, LEVW)\n
+            // Because this laptop starts at full brightness, I just set it right\n
+            // here.  This is to insure _BQC and XBQC return the correct level\n
+            // at startup.\n
+            Store(0x14991499, LEVX)\n
+        }\n
+        // _BCM/_BQC: set/get for brightness level\n
+        Method (_BCM, 1, NotSerialized)\n
+        {\n
+            // store new backlight level\n
+            Store(Match(_BCL, MGE, Arg0, MTR, 0, 2), Local0)\n
+            If (LEqual(Local0, Ones)) { Subtract(SizeOf(_BCL), 1, Local0) }\n
+            Store(Or(DerefOf(Index(_BCL,Local0)),And(LEVX,0xFFFF0000)), LEVX)\n
+        }\n
+        Method (_BQC, 0, NotSerialized)\n
+        {\n
+            Store(Match(_BCL, MGE, And(LEVX, 0xFFFF), MTR, 0, 2), Local0)\n
+            If (LEqual(Local0, Ones)) { Subtract(SizeOf(_BCL), 1, Local0) }\n
+            Return(DerefOf(Index(_BCL, Local0)))\n
+        }\n
+        Method (_DOS, 1, NotSerialized)\n
+        {\n
+            // Note: Some systems have this defined in DSDT, so uncomment\n
+            // the next line if that is the case.\n
+            //External(^^_DOS, MethodObj)\n
+            ^^_DOS(Arg0)\n
+        }\n
+        // extended _BCM/_BQC for setting "in between" levels\n
+        Method (XBCM, 1, NotSerialized)\n
+        {\n
+            // store new backlight level\n
+            If (LGreater(Arg0, XRGH)) { Store(XRGH, Arg0) }\n
+            If (LAnd(Arg0, LLess(Arg0, XRGL))) { Store(XRGL, Arg0) }\n
+            Store(Or(Arg0,And(LEVX,0xFFFF0000)), LEVX)\n
+        }\n
+        Method (XBQC, 0, NotSerialized)\n
+        {\n
+            Store(And(LEVX,0xFFFF), Local0)\n
+            If (LGreater(Local0, XRGH)) { Store(XRGH, Local0) }\n
+            If (LAnd(Local0, LLess(Local0, XRGL))) { Store(XRGL, Local0) }\n
+            Return(Local0)\n
+        }\n
+        // Use XOPT=1 to disable smooth transitions\n
+        Name (XOPT, Zero)\n
+        // XRGL/XRGH: defines the valid range\n
+        Name (XRGL, 25)\n
+        Name (XRGH, 5273)\n
+        // _BCL: returns list of valid brightness levels\n
+        // first two entries describe ac/battery power levels\n
+        Name (_BCL, Package()\n
+        {\n
+            2653,\n
+            2653,\n
+            0,\n
+            111,\n
+            193,\n
+            275,\n
+            357,\n
+            439,\n
+            521,\n
+            603,\n
+            685,\n
+            767,\n
+            849,\n
+            931,\n
+            1013,\n
+            1095,\n
+            1177,\n
+            1259,\n
+            1341,\n
+            1423,\n
+            1505,\n
+            1587,\n
+            1669,\n
+            1751,\n
+            1833,\n
+            1915,\n
+            1997,\n
+            2079,\n
+            2161,\n
+            2243,\n
+            2325,\n
+            2407,\n
+            2489,\n
+            2571,\n
+            2653,\n
+            2735,\n
+            2817,\n
+            2899,\n
+            2981,\n
+            3063,\n
+            3145,\n
+            3227,\n
+            3309,\n
+            3391,\n
+            3473,\n
+            3555,\n
+            3637,\n
+            3719,\n
+            3801,\n
+            3883,\n
+            3965,\n
+            4047,\n
+            4129,\n
+            4211,\n
+            4293,\n
+            4375,\n
+            4457,\n
+            4539,\n
+            4621,\n
+            4703,\n
+            4785,\n
+            4867,\n
+            4949,\n
+            5031,\n
+            5113,\n
+            5195,\n
+            5277\n
+        })\n
+    }\n
+end;
+

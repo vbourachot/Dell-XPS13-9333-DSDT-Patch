@@ -1,0 +1,78 @@
+# Instrument SBUS device methods
+
+into method label SSXB parent_adr 0x001F0003 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("SSXB enter")\n
+%1\n
+\\rmdt.p1("SSXB exit")\n
+end;
+
+into method label SRXB parent_adr 0x001F0003 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("SRXB enter")\n
+%1\n
+\\rmdt.p1("SRXB exit")\n
+end;
+
+into method label SWRB parent_adr 0x001F0003 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("SWRB enter")\n
+%1\n
+\\rmdt.p1("SWRB exit")\n
+end;
+
+into method label SRDB parent_adr 0x001F0003 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("SRDB enter")\n
+%1\n
+\\rmdt.p1("SRDB exit")\n
+end;
+
+into method label SWRW parent_adr 0x001F0003 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("SWRW enter")\n
+%1\n
+\\rmdt.p1("SWRW exit")\n
+end;
+
+into method label SRDW parent_adr 0x001F0003 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("SRDW enter")\n
+%1\n
+\\rmdt.p1("SRDW exit")\n
+end;
+
+into method label SBLW parent_adr 0x001F0003 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("SBLW enter")\n
+%1\n
+\\rmdt.p1("SBLW exit")\n
+end;
+
+into method label SBLR parent_adr 0x001F0003 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("SBLR enter")\n
+%1\n
+\\rmdt.p1("SBLR exit")\n
+end;
+
+into method label STRT parent_adr 0x001F0003 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("STRT enter")\n
+%1\n
+\\rmdt.p1("STRT exit")\n
+end;
+
+into method label COMP parent_adr 0x001F0003 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("COMP enter")\n
+%1\n
+\\rmdt.p1("COMP exit")\n
+end;
+
+into method label KILL parent_adr 0x001F0003 code_regex ([\s\S]*) replace_matched
+begin
+\\rmdt.p1("KILL enter")\n
+%1\n
+\\rmdt.p1("KILL exit")\n
+end;

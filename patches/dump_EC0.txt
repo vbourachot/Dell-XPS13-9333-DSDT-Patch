@@ -1,0 +1,286 @@
+# 16 bit register getter
+into method label B2B1 remove_entry;
+into definitionblock code_regex . insert
+begin
+    Method (B2B1)\n
+    {\n
+    }\n
+end;
+
+
+# Dump EC0
+into method label DUMP remove_entry;
+into definitionblock code_regex . insert
+begin
+    Method (DUMP)\n
+    {\n
+        \rmdt.p1("*** DUMP EC0 ***")\n
+        \rmdt.p2("WKEV", \_SB.PCI0.LPCB.EC0.WKEV)\n
+//\rmdt.p2("Offset (0x03), \n
+        \rmdt.p2("CCVH", \_SB.PCI0.LPCB.EC0.CCVH)\n
+        \rmdt.p2("CCVL", \_SB.PCI0.LPCB.EC0.CCVL)\n
+//\rmdt.p2("Offset (0x18),  \n
+        \rmdt.p2("PRTC", \_SB.PCI0.LPCB.EC0.PRTC)\n
+        \rmdt.p2("SSTA", \_SB.PCI0.LPCB.EC0.SSTA)\n 
+        \rmdt.p2("SADR", \_SB.PCI0.LPCB.EC0.SADR)\n
+        \rmdt.p2("SCMD", \_SB.PCI0.LPCB.EC0.SCMD)\n
+        \rmdt.p2("SMID", \_SB.PCI0.LPCB.EC0.SMID)\n 
+Sleep (0x64)\n 
+        \rmdt.p2("SDAT", \_SB.PCI0.LPCB.EC0.SDAT)\n 
+        \rmdt.p2("SDT1", \_SB.PCI0.LPCB.EC0.SDT1)\n 
+//\rmdt.p2("Offset (0x3C),  \n
+        \rmdt.p2("BCNT", \_SB.PCI0.LPCB.EC0.BCNT)\n 
+        \rmdt.p2("ALRA", \_SB.PCI0.LPCB.EC0.ALRA)\n 
+        \rmdt.p2("ALD0", \_SB.PCI0.LPCB.EC0.ALD0)\n 
+        \rmdt.p2("ALD1", \_SB.PCI0.LPCB.EC0.ALD1)\n 
+        \rmdt.p2("ACIN", \_SB.PCI0.LPCB.EC0.ACIN)\n
+Sleep (0x64)\n 
+        \rmdt.p2("PWON", \_SB.PCI0.LPCB.EC0.PWON)\n  
+        \rmdt.p2("INS3", \_SB.PCI0.LPCB.EC0.INS3)\n  
+        \rmdt.p2("WPSW", \_SB.PCI0.LPCB.EC0.WPSW)\n  
+        \rmdt.p2("INS4", \_SB.PCI0.LPCB.EC0.INS4)\n  
+        \rmdt.p2("SMON", \_SB.PCI0.LPCB.EC0.SMON)\n  
+        \rmdt.p2("WPWG", \_SB.PCI0.LPCB.EC0.WPWG)\n  
+        \rmdt.p2("RVCO", \_SB.PCI0.LPCB.EC0.RVCO)\n  
+        \rmdt.p2("SUSB", \_SB.PCI0.LPCB.EC0.SUSB)\n  
+        \rmdt.p2("SUSC", \_SB.PCI0.LPCB.EC0.SUSC)\n  
+        \rmdt.p2("FANO", \_SB.PCI0.LPCB.EC0.FANO)\n  
+Sleep (0x64)\n 
+        \rmdt.p2("SNIF", \_SB.PCI0.LPCB.EC0.SNIF)\n  
+        \rmdt.p2("LIDA", \_SB.PCI0.LPCB.EC0.LIDA)\n  
+//\rmdt.p2("Offset (0x42), \n
+        \rmdt.p2("KBBP", \_SB.PCI0.LPCB.EC0.KBBP)\n  
+        \rmdt.p2("DADP", \_SB.PCI0.LPCB.EC0.DADP)\n  
+        \rmdt.p2("MMBT", \_SB.PCI0.LPCB.EC0.MMBT)\n  
+        \rmdt.p2("KBSO", \_SB.PCI0.LPCB.EC0.KBSO)\n  
+        \rmdt.p2("KBER", \_SB.PCI0.LPCB.EC0.KBER)\n  
+        \rmdt.p2("ECCB", \_SB.PCI0.LPCB.EC0.ECCB)\n  
+        \rmdt.p2("CIRB", \_SB.PCI0.LPCB.EC0.CIRB)\n  
+        \rmdt.p2("MUTE", \_SB.PCI0.LPCB.EC0.MUTE)\n  
+        \rmdt.p2("TSN0", \_SB.PCI0.LPCB.EC0.TSN0)\n  
+        \rmdt.p2("TSN1", \_SB.PCI0.LPCB.EC0.TSN1)\n  
+Sleep (0x64)\n 
+        \rmdt.p2("OSTP", \_SB.PCI0.LPCB.EC0.OSTP)\n  
+        \rmdt.p2("TSN2", \_SB.PCI0.LPCB.EC0.TSN2)\n  
+        \rmdt.p2("EBK0", \_SB.PCI0.LPCB.EC0.EBK0)\n  
+        \rmdt.p2("EBK1", \_SB.PCI0.LPCB.EC0.EBK1)\n  
+        \rmdt.p2("EBK2", \_SB.PCI0.LPCB.EC0.EBK2)\n  
+        \rmdt.p2("EBK3", \_SB.PCI0.LPCB.EC0.EBK3)\n  
+//\rmdt.p2("Offset (0x45), \n
+//\rmdt.p2("    ", 4, \n
+        \rmdt.p2("QA3E", \_SB.PCI0.LPCB.EC0.QA3E)\n  
+//\rmdt.p2("Offset (0x4B), \n
+        \rmdt.p2("LUXH", \_SB.PCI0.LPCB.EC0.LUXH)\n 
+        \rmdt.p2("LUXL", \_SB.PCI0.LPCB.EC0.LUXL)\n 
+Sleep (0x64)\n 
+//\rmdt.p2("Offset (0x50),  \n
+        \rmdt.p2("TOFS", \_SB.PCI0.LPCB.EC0.TOFS)\n 
+//\rmdt.p2("Offset (0x53),  \n
+        \rmdt.p2("AOAC", \_SB.PCI0.LPCB.EC0.AOAC)\n 
+//\rmdt.p2("Offset (0x55),  \n
+        \rmdt.p2("OTPC", \_SB.PCI0.LPCB.EC0.OTPC)\n 
+        \rmdt.p2("VGAT", \_SB.PCI0.LPCB.EC0.VGAT)\n 
+        \rmdt.p2("CHPT", \_SB.PCI0.LPCB.EC0.CHPT)\n 
+        \rmdt.p2("CPUT", \_SB.PCI0.LPCB.EC0.CPUT)\n 
+        Sleep (0x64)\n 
+        \rmdt.p2("SYST", \_SB.PCI0.LPCB.EC0.SYST)\n 
+        \rmdt.p2("DTS1", \_SB.PCI0.LPCB.EC0.DTS1)\n 
+        \rmdt.p2("DTS2", \_SB.PCI0.LPCB.EC0.DTS2)\n 
+        \rmdt.p2("DIMM", \_SB.PCI0.LPCB.EC0.DIMM)\n 
+//\rmdt.p2("Offset (0x5E),  \n
+        \rmdt.p2("HWSN", \_SB.PCI0.LPCB.EC0.HWSN)\n 
+        \rmdt.p2("CTYP", \_SB.PCI0.LPCB.EC0.CTYP)\n 
+        Sleep (0x64)\n 
+        \rmdt.p2("FCNT", \_SB.PCI0.LPCB.EC0.FCNT)\n  
+        \rmdt.p2("FTST", \_SB.PCI0.LPCB.EC0.FTST)\n  
+//\rmdt.p2("    ", 3, \n
+        \rmdt.p2("FADJ", \_SB.PCI0.LPCB.EC0.FADJ)\n  
+        \rmdt.p2("TCTL", \_SB.PCI0.LPCB.EC0.TCTL)\n  
+        \rmdt.p2("FATO", \_SB.PCI0.LPCB.EC0.FATO)\n  
+        \rmdt.p2("DAC1", \_SB.PCI0.LPCB.EC0.DAC1)\n 
+        \rmdt.p2("DAC2", \_SB.PCI0.LPCB.EC0.DAC2)\n 
+        \rmdt.p2("FLVL", \_SB.PCI0.LPCB.EC0.FLVL)\n 
+//16bit below\n
+//\rmdt.p2("CTL1", \_SB.PCI0.LPCB.EC0.CTL1)\n 
+Sleep (0x64)\n 
+        \rmdt.p2("PWGV", \_SB.PCI0.LPCB.EC0.PWGV)\n 
+        \rmdt.p2("PWTH", \_SB.PCI0.LPCB.EC0.PWTH)\n 
+//\rmdt.p2("FANH", \_SB.PCI0.LPCB.EC0.FANH)\n 
+//\rmdt.p2("FANL", \_SB.PCI0.LPCB.EC0.FANL)\n 
+        \rmdt.p2("THGV", \_SB.PCI0.LPCB.EC0.THGV)\n 
+        \rmdt.p2("THTH", \_SB.PCI0.LPCB.EC0.THTH)\n 
+//\rmdt.p2("FTAC", 16,  \n
+        \rmdt.p2("FA2H", \_SB.PCI0.LPCB.EC0.FA2H)\n 
+        \rmdt.p2("FA2L", \_SB.PCI0.LPCB.EC0.FA2L)\n 
+        Sleep (0x64)\n 
+        \rmdt.p2("SLED", \_SB.PCI0.LPCB.EC0.SLED)\n  
+        \rmdt.p2("NLED", \_SB.PCI0.LPCB.EC0.NLED)\n  
+        \rmdt.p2("CLED", \_SB.PCI0.LPCB.EC0.CLED)\n  
+//\rmdt.p2("Offset (0x71), \n
+        \rmdt.p2("BT1L", \_SB.PCI0.LPCB.EC0.BT1L)\n  
+        \rmdt.p2("BT2L", \_SB.PCI0.LPCB.EC0.BT2L)\n  
+        \rmdt.p2("SNIL", \_SB.PCI0.LPCB.EC0.SNIL)\n  
+//\rmdt.p2("Offset (0x74), \n
+        \rmdt.p2("BLBU", \_SB.PCI0.LPCB.EC0.BLBU)\n  
+        \rmdt.p2("BLBD", \_SB.PCI0.LPCB.EC0.BLBD)\n  
+        \rmdt.p2("BLBH", \_SB.PCI0.LPCB.EC0.BLBH)\n  
+//\rmdt.p2("Offset (0x75), \n
+Sleep (0x64)\n 
+        \rmdt.p2("BHLL", \_SB.PCI0.LPCB.EC0.BHLL)\n 
+        \rmdt.p2("BTLL", \_SB.PCI0.LPCB.EC0.BTLL)\n 
+        \rmdt.p2("BTLI", \_SB.PCI0.LPCB.EC0.BTLI)\n 
+//\rmdt.p2("Offset (0x79),  \n
+        \rmdt.p2("SVPL", \_SB.PCI0.LPCB.EC0.SVPL)\n 
+        \rmdt.p2("DIAG", \_SB.PCI0.LPCB.EC0.DIAG)\n 
+        \rmdt.p2("KLED", \_SB.PCI0.LPCB.EC0.KLED)\n 
+//\rmdt.p2("Offset (0x80),  \n
+        \rmdt.p2("ACTP", \_SB.PCI0.LPCB.EC0.ACTP)\n 
+//\rmdt.p2("Offset (0x82),  \n
+        \rmdt.p2("NOS0", \_SB.PCI0.LPCB.EC0.NOS0)\n 
+        Sleep (0x64)\n 
+//\rmdt.p2("Offset (0x88), \n
+//\rmdt.p2("    ", 2, \n
+        \rmdt.p2("AWP3", \_SB.PCI0.LPCB.EC0.AWP3)\n  
+        \rmdt.p2("AWP4", \_SB.PCI0.LPCB.EC0.AWP4)\n  
+//\rmdt.p2("Offset (0x89), \n
+        \rmdt.p2("ACOS", \_SB.PCI0.LPCB.EC0.ACOS)\n 
+//\rmdt.p2("Offset (0x8B), \n
+        \rmdt.p2("KBTL", \_SB.PCI0.LPCB.EC0.KBTL)\n 
+        \rmdt.p2("KBBL", \_SB.PCI0.LPCB.EC0.KBBL)\n 
+        \rmdt.p2("BRSL", \_SB.PCI0.LPCB.EC0.BRSL)\n 
+        \rmdt.p2("PLGH", \_SB.PCI0.LPCB.EC0.PLGH)\n 
+        \rmdt.p2("PLGL", \_SB.PCI0.LPCB.EC0.PLGL)\n 
+//\rmdt.p2("Offset (0x9D),  \n
+        \rmdt.p2("SBF0", \_SB.PCI0.LPCB.EC0.SBF0)\n 
+        Sleep (0x64)\n 
+/*
+\rmdt.p2("Offset (0xA0), 
+\rmdt.p2("CAPX,8,CAPY,8, 
+\rmdt.p2("RCP0", 16, 
+\rmdt.p2("VOTX,8,VOTY,8, 
+\rmdt.p2("CRTX,8,CRTY,8, 
+\rmdt.p2("BTM0", 16, 
+\rmdt.p2("BST0", 16, 
+\rmdt.p2("BRC0", 16, 
+\rmdt.p2("FCPX,8,FCPY,8, 
+\rmdt.p2("DCPX,8,DCPY,8, 
+\rmdt.p2("DVTX,8,DVTY,8, 
+\rmdt.p2("MER0", 16, 
+\rmdt.p2("MFD0", 16, 
+\rmdt.p2("BSNX,8,BSNY,8, 
+\rmdt.p2("MAS0", 16, 
+\rmdt.p2("Offset (0xC3), 
+*/ \n
+        \rmdt.p2("BCS0", \_SB.PCI0.LPCB.EC0.BCS0)\n 
+        \rmdt.p2("MNN0", \_SB.PCI0.LPCB.EC0.MNN0)\n 
+        \rmdt.p2("DNN0", \_SB.PCI0.LPCB.EC0.DNN0)\n 
+        \rmdt.p2("BCN0", \_SB.PCI0.LPCB.EC0.BCN0)\n 
+        \rmdt.p2("BOC0", \_SB.PCI0.LPCB.EC0.BOC0)\n 
+        \rmdt.p2("BFC0", \_SB.PCI0.LPCB.EC0.BFC0)\n 
+        \rmdt.p2("B0NR", \_SB.PCI0.LPCB.EC0.B0NR)\n  
+        \rmdt.p2("B0NS", \_SB.PCI0.LPCB.EC0.B0NS)\n  
+//\rmdt.p2("Offset (0xCA), \n
+//\rmdt.p2("Offset (0xCB), \n
+        \rmdt.p2("B0IN", \_SB.PCI0.LPCB.EC0.B0IN)\n  
+        \rmdt.p2("B0DY", \_SB.PCI0.LPCB.EC0.B0DY)\n  
+Sleep (0x64)\n 
+        \rmdt.p2("B0PF", \_SB.PCI0.LPCB.EC0.B0PF)\n  
+        \rmdt.p2("B0TF", \_SB.PCI0.LPCB.EC0.B0TF)\n  
+        \rmdt.p2("B0CL", \_SB.PCI0.LPCB.EC0.B0CL)\n  
+        \rmdt.p2("B0LW", \_SB.PCI0.LPCB.EC0.B0LW)\n  
+        \rmdt.p2("B0DC", \_SB.PCI0.LPCB.EC0.B0DC)\n  
+        \rmdt.p2("B0DD", \_SB.PCI0.LPCB.EC0.B0DD)\n  
+        \rmdt.p2("B0FC", \_SB.PCI0.LPCB.EC0.B0FC)\n  
+        \rmdt.p2("B0PC", \_SB.PCI0.LPCB.EC0.B0PC)\n  
+        \rmdt.p2("B0OT", \_SB.PCI0.LPCB.EC0.B0OT)\n  
+Sleep (0x64)\n 
+//\rmdt.p2("    ", \_SB.PCI0.LPCB.EC0.)\n  
+        \rmdt.p2("B0WK", \_SB.PCI0.LPCB.EC0.B0WK)\n  
+        \rmdt.p2("B0IC", \_SB.PCI0.LPCB.EC0.B0IC)\n  
+        \rmdt.p2("B0WC", \_SB.PCI0.LPCB.EC0.B0WC)\n  
+        \rmdt.p2("B0L3", \_SB.PCI0.LPCB.EC0.B0L3)\n  
+        \rmdt.p2("B0FG", \_SB.PCI0.LPCB.EC0.B0FG)\n  
+        \rmdt.p2("B0DG", \_SB.PCI0.LPCB.EC0.B0DG)\n  
+        \rmdt.p2("B0VL", \_SB.PCI0.LPCB.EC0.B0VL)\n  
+        \rmdt.p2("B0RY", \_SB.PCI0.LPCB.EC0.B0RY)\n  
+        \rmdt.p2("B0AL", \_SB.PCI0.LPCB.EC0.B0AL)\n  
+Sleep (0x64)\n 
+        \rmdt.p2("B0AF", \_SB.PCI0.LPCB.EC0.B0AF)\n  
+        \rmdt.p2("B0NI", \_SB.PCI0.LPCB.EC0.B0NI)\n  
+        \rmdt.p2("B0LI", \_SB.PCI0.LPCB.EC0.B0LI)\n  
+        \rmdt.p2("SME0", \_SB.PCI0.LPCB.EC0.SME0)\n  
+        \rmdt.p2("SME1", \_SB.PCI0.LPCB.EC0.SME1)\n  
+        \rmdt.p2("SME2", \_SB.PCI0.LPCB.EC0.SME2)\n  
+        \rmdt.p2("SME3", \_SB.PCI0.LPCB.EC0.SME3)\n  
+        \rmdt.p2("FLDG", \_SB.PCI0.LPCB.EC0.FLDG)\n  
+        \rmdt.p2("FLCG", \_SB.PCI0.LPCB.EC0.FLCG)\n  
+Sleep (0x64)\n 
+        \rmdt.p2("DSG0", \_SB.PCI0.LPCB.EC0.DSG0)\n  
+        \rmdt.p2("INIT", \_SB.PCI0.LPCB.EC0.INIT)\n  
+        \rmdt.p2("RTAM", \_SB.PCI0.LPCB.EC0.RTAM)\n  
+        \rmdt.p2("RCAM", \_SB.PCI0.LPCB.EC0.RCAM)\n  
+//\rmdt.p2("    ", \_SB.PCI0.LPCB.EC0.)\n  
+        \rmdt.p2("TDAM", \_SB.PCI0.LPCB.EC0.TDAM)\n  
+        \rmdt.p2("OTAM", \_SB.PCI0.LPCB.EC0.OTAM)\n  
+//\rmdt.p2("    ", \_SB.PCI0.LPCB.EC0.)\n  
+        \rmdt.p2("TCAM", \_SB.PCI0.LPCB.EC0.TCAM)\n  
+        \rmdt.p2("OCAM", \_SB.PCI0.LPCB.EC0.OCAM)\n  
+Sleep (0x64)\n 
+/*
+\rmdt.p2("CAP1", 16, 
+\rmdt.p2("RCP1", 16, 
+\rmdt.p2("VOT1", 16, 
+\rmdt.p2("CRT1", 16, 
+\rmdt.p2("BTM1", 16, 
+\rmdt.p2("BST1", 16, 
+\rmdt.p2("BRC1", 16, 
+\rmdt.p2("FCP1", 16, 
+\rmdt.p2("DCP1", 16, 
+\rmdt.p2("DVT1", 16, 
+\rmdt.p2("MER1", 16, 
+\rmdt.p2("MFD1", 16, 
+\rmdt.p2("BSN1", 16, 
+\rmdt.p2("MAS1", 16, 
+\rmdt.p2("Offset (0xF3), 
+*/ \n
+        \rmdt.p2("BCS1", \_SB.PCI0.LPCB.EC0.BCS1)\n 
+        \rmdt.p2("MNN1", \_SB.PCI0.LPCB.EC0.MNN1)\n 
+        \rmdt.p2("DNN1", \_SB.PCI0.LPCB.EC0.DNN1)\n 
+        \rmdt.p2("BCN1", \_SB.PCI0.LPCB.EC0.BCN1)\n 
+        \rmdt.p2("BOC1", \_SB.PCI0.LPCB.EC0.BOC1)\n 
+        \rmdt.p2("BFC1", \_SB.PCI0.LPCB.EC0.BFC1)\n 
+        \rmdt.p2("BMD1", \_SB.PCI0.LPCB.EC0.BMD1)\n 
+        \rmdt.p2("CPL1", \_SB.PCI0.LPCB.EC0.CPL1)\n 
+Sleep (0x64)\n 
+
+        \rmdt.p2("B1IN", \_SB.PCI0.LPCB.EC0.B1IN)\n  
+        \rmdt.p2("B1DY", \_SB.PCI0.LPCB.EC0.B1DY)\n  
+        \rmdt.p2("B1PF", \_SB.PCI0.LPCB.EC0.B1PF)\n  
+        \rmdt.p2("B1TF", \_SB.PCI0.LPCB.EC0.B1TF)\n  
+        \rmdt.p2("B1CL", \_SB.PCI0.LPCB.EC0.B1CL)\n  
+        \rmdt.p2("B1LW", \_SB.PCI0.LPCB.EC0.B1LW)\n  
+        \rmdt.p2("B1DC", \_SB.PCI0.LPCB.EC0.B1DC)\n  
+        \rmdt.p2("B1DD", \_SB.PCI0.LPCB.EC0.B1DD)\n  
+        \rmdt.p2("B1FC", \_SB.PCI0.LPCB.EC0.B1FC)\n  
+        \rmdt.p2("B1PC", \_SB.PCI0.LPCB.EC0.B1PC)\n  
+Sleep (0x64)\n 
+        \rmdt.p2("B1OT", \_SB.PCI0.LPCB.EC0.B1OT)\n  
+//\rmdt.p2("    ", \_SB.PCI0.LPCB.EC0.)\n  
+        \rmdt.p2("B1WK", \_SB.PCI0.LPCB.EC0.B1WK)\n  
+        \rmdt.p2("B1IC", \_SB.PCI0.LPCB.EC0.B1IC)\n  
+        \rmdt.p2("B1WC", \_SB.PCI0.LPCB.EC0.B1WC)\n  
+        \rmdt.p2("B1L3", \_SB.PCI0.LPCB.EC0.B1L3)\n  
+        \rmdt.p2("B1FG", \_SB.PCI0.LPCB.EC0.B1FG)\n  
+        \rmdt.p2("B1DG", \_SB.PCI0.LPCB.EC0.B1DG)\n  
+        \rmdt.p2("B1VL", \_SB.PCI0.LPCB.EC0.B1VL)\n  
+        \rmdt.p2("B1RY", \_SB.PCI0.LPCB.EC0.B1RY)\n  
+Sleep (0x64)\n 
+        \rmdt.p2("B1AL", \_SB.PCI0.LPCB.EC0.B1AL)\n  
+        \rmdt.p2("B1AF", \_SB.PCI0.LPCB.EC0.B1AF)\n  
+        \rmdt.p2("B1NI", \_SB.PCI0.LPCB.EC0.B1NI)\n  
+        \rmdt.p2("B1LI", \_SB.PCI0.LPCB.EC0.B1LI)\n  
+        \rmdt.p2("SLM1", \_SB.PCI0.LPCB.EC0.SLM1)\n 
+        \rmdt.p2("SLM2", \_SB.PCI0.LPCB.EC0.SLM2)\n
+        \rmdt.p1("*** END DUMP EC0 ***")\n
+    }\n
+end;

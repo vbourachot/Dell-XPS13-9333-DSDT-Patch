@@ -1,0 +1,57 @@
+# Intel Lynxpoint PCH Low Power Subsystem has DMA controller to support general
+# purpose serial buses like SPI, I2C, and HSUART. This controller is enumerated
+# from ACPI namespace with ACPI ID INTL9C60, PCI address: 0x00150000
+# _STA returns 0 - ahould return 0x0F for Darwin per MacBookAir6,2 DSDT
+
+into method label _STA parent_adr 0x00150000 remove_entry;
+into device name_adr 0x00150000 insert
+begin
+Method (_STA, 0, NotSerialized)\n
+{\n
+	Return (0x0F)\n
+}\n
+end;
+
+# Same issue with SPI Host Controller
+# from ACPI namespace with ACPI ID INT33C1, PCI address: 0x00150004
+# _STA returns 0 - ahould return 0x0F for Darwin per MacBookAir6,2 DSDT
+
+into method label _STA parent_adr 0x00150004 remove_entry;
+into device name_adr 0x00150004 insert
+begin
+
+Method (_STA, 0, NotSerialized)\n
+{\n
+	Return (0x0F)\n
+}\n
+end;
+
+into method label _STA parent_adr 0x00150001 remove_entry;
+into device name_adr 0x00150001 insert
+begin
+
+Method (_STA, 0, NotSerialized)\n
+{\n
+	Return (0x0F)\n
+}\n
+end;
+
+into method label _STA parent_adr 0x00150002 remove_entry;
+into device name_adr 0x00150002 insert
+begin
+
+Method (_STA, 0, NotSerialized)\n
+{\n
+	Return (0x0F)\n
+}\n
+end;
+
+into method label _STA parent_adr 0x00150003 remove_entry;
+into device name_adr 0x00150003 insert
+begin
+
+Method (_STA, 0, NotSerialized)\n
+{\n
+	Return (0x0F)\n
+}\n
+end;

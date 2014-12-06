@@ -98,11 +98,11 @@
 		<key>USB</key>
 		<dict>
 			<key>Inject</key>
-			<true/>
+			<false/>
 			<key>FixOwnership</key>
 			<false/>
 			<key>AddClockID</key>
-			<true/>
+			<false/>
 		</dict>
 	</dict>
 	<key>KernelAndKextPatches</key>
