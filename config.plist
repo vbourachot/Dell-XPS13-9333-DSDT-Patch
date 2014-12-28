@@ -89,8 +89,23 @@
 		<dict>
 			<key>DropOem</key>
 			<true/>
+			<key>EnableC2</key>
+			<true/>
+			<key>EnableC4</key>
+			<true/>
+			<key>EnableC6</key>
+			<true/>
+			<key>EnableC7</key>
+			<true/>
 			<key>Generate</key>
-			<false/>
+			<dict>
+				<key>PStates</key>
+				<true/>
+				<key>CStates</key>
+				<true/>
+			</dict>
+			<key>PluginType</key>
+			<integer>1</integer>
 		</dict>
 	</dict>
 	<key>Devices</key>
@@ -232,6 +247,16 @@
 				<string>IOBluetoothFamily</string>
 				<key>Replace</key>
 				<data>uA8AAACQ</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Enable USB3 post wake</string>
+				<key>Name</key>
+				<string>AppleUSBXHCI</string>
+				<key>Find</key>
+				<data>xoDIAAAAAQ==</data>
+				<key>Replace</key>
+				<data>xoDIAAAAAA==</data>
 			</dict>
 		</array>
 		<key>ForceKextsToLoad</key>

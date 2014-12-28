@@ -164,15 +164,6 @@ install_config:
 	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi
 
 
-# Install CodecCommander custom Info.plist
-install_plist_cc:
-	$(XMLLINT) ./plists/CodecCommander_Info.plist
-	if [ ! -d $(EFIDIR) ]; then mkdir $(EFIDIR) && diskutil mount -mountPoint $(EFIDIR) $(EFIVOL); fi
-	cp ./plists/CodecCommander_Info.plist $(EFIDIR)/EFI/CLOVER/kexts/$(OSXV)/CodecCommander.kext/Contents/Info.plist
-	touch $(EFIDIR)/EFI/CLOVER/kexts/$(OSXV)/CodecCommander.kext
-	diskutil unmount $(EFIDIR)
-	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi
-
 # Install FakeSMC custom Info.plist
 install_plist_smc:
 	$(XMLLINT) ./plists/FakeSMC_Info.plist
