@@ -1,5 +1,9 @@
 #!/bin/sh
 
+#########
+# NOT REQUIRED WHEN USING FakePCIID FOR HD4400 INJECTION
+#########
+
 # Patch libCLVMIGILPlugin for HD4400to prevent crashes in Preview/Quick Look..
 # Yosemite only
 #

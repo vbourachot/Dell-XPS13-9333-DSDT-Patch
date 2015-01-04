@@ -207,8 +207,18 @@
 				<string>4188C4EB23</string>
 			</dict>
 			<dict>
+				<key>Comment</key>
+				<string>Enable USB3 post wake</string>
 				<key>Name</key>
-				<string>AirPortBrcm4360</string>
+				<string>AppleUSBXHCI</string>
+				<key>Find</key>
+				<data>xoDIAAAAAQ==</data>
+				<key>Replace</key>
+				<data>xoDIAAAAAA==</data>
+			</dict>
+			<dict>
+				<key>Name</key>
+				<string>disable_AirPortBrcm4360</string>
 				<key>Comment</key>
 				<string>BCM4352 WLAN Info patch</string>
 				<key>InfoPlistPatch</key>
@@ -220,43 +230,13 @@
 			</dict>
 			<dict>
 				<key>Name</key>
-				<string>AirPortBrcm4360</string>
+				<string>disable_AirPortBrcm4360</string>
 				<key>Comment</key>
 				<string>BCM4352 WLAN 5GHz US</string>
 				<key>Find</key>
 				<string>5854002B182C210020</string>
 				<key>Replace</key>
 				<string>5553080A361C47000A</string>
-			</dict>
-			<dict>
-				<key>Name</key>
-				<string>AirPortBrcm4360</string>
-				<key>Comment</key>
-				<string>Airport - 3rd party card fix</string>
-				<key>Find</key>
-				<string>6B100000750D</string>
-				<key>Replace</key>
-				<string>6B1000009090</string>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>IOBluetoothFamily - Continuity &amp; Hand-off</string>
-				<key>Find</key>
-				<data>i4eMAQAA</data>
-				<key>Name</key>
-				<string>IOBluetoothFamily</string>
-				<key>Replace</key>
-				<data>uA8AAACQ</data>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>Enable USB3 post wake</string>
-				<key>Name</key>
-				<string>AppleUSBXHCI</string>
-				<key>Find</key>
-				<data>xoDIAAAAAQ==</data>
-				<key>Replace</key>
-				<data>xoDIAAAAAA==</data>
 			</dict>
 		</array>
 		<key>ForceKextsToLoad</key>
