@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -3421,8 +3420,7 @@
 		<dict>
 			<key>PathMap</key>
 			<array>
-				
-				<!-- Mic in: 18 7  (0x12 0x07)-->
+                <!-- Mic in: 18 7  (0x12 0x07) (identical)-->
 				<array>
 					<array>
 						<array>
@@ -3465,41 +3463,10 @@
 						</array>
 					</array>
 				</array>
-
-				<!-- Speakers: 20 13 3 (0x14 0x0d 0x03) -->
+				<!-- Line in: 9 34 27 (0x09 0x22 0x1b) New -->
 				<array>
 					<array>
 						<array>
-							<dict>
-								<key>Amp</key>
-								<dict>
-									<key>MuteInputAmp</key>
-									<true/>
-									<key>PublishMute</key>
-									<false/>
-									<key>PublishVolume</key>
-									<true/>
-									<key>VolumeInputAmp</key>
-									<false/>
-								</dict>
-								<key>NodeID</key>
-								<integer>20</integer>
-							</dict>
-							<dict>
-								<key>Amp</key>
-								<dict>
-									<key>MuteInputAmp</key>
-									<true/>
-									<key>PublishMute</key>
-									<false/>
-									<key>PublishVolume</key>
-									<false/>
-									<key>VolumeInputAmp</key>
-									<false/>
-								</dict>
-								<key>NodeID</key>
-								<integer>13</integer>
-							</dict>
 							<dict>
 								<key>Amp</key>
 								<dict>
@@ -3525,17 +3492,26 @@
 									<key>PublishVolume</key>
 									<true/>
 									<key>VolumeInputAmp</key>
-									<false/>
+									<true/>
 								</dict>
 								<key>NodeID</key>
+								<integer>9</integer>
+							</dict>
+							<dict>
+								<key>NodeID</key>
+								<integer>34</integer>
+							</dict>
+							<dict>
+								<key>Boost</key>
 								<integer>3</integer>
+								<key>NodeID</key>
+								<integer>27</integer>
 							</dict>
 						</array>
 					</array>
-
-					<!-- HP 21 12 2 (0x15 0x0c 0x02) -->
-					<!-- HP change to 0x15 0x0d 0x03 (21 13 3) NOK -->
-					<!-- HP change to 0x15 0x0e 0x04 (21 14 4) NOK -->
+				</array>
+				<!-- Speakers: 20 12 2 (0x14 0x0c 0x02) (were 20 13 3)-->
+				<array>
 					<array>
 						<array>
 							<dict>
@@ -3544,14 +3520,14 @@
 									<key>MuteInputAmp</key>
 									<true/>
 									<key>PublishMute</key>
-									<false/>
+									<true/>
 									<key>PublishVolume</key>
 									<true/>
 									<key>VolumeInputAmp</key>
 									<false/>
 								</dict>
 								<key>NodeID</key>
-								<integer>21</integer>
+								<integer>20</integer>
 							</dict>
 							<dict>
 								<key>Amp</key>
@@ -3559,9 +3535,9 @@
 									<key>MuteInputAmp</key>
 									<true/>
 									<key>PublishMute</key>
-									<false/>
+									<true/>
 									<key>PublishVolume</key>
-									<false/>
+									<true/>
 									<key>VolumeInputAmp</key>
 									<false/>
 								</dict>
@@ -3586,9 +3562,82 @@
 											<integer>2</integer>
 										</dict>
 									</array>
+									<key>MuteInputAmp</key>
+									<true/>
+									<key>PublishMute</key>
+									<true/>
+									<key>PublishVolume</key>
+									<true/>
+									<key>VolumeInputAmp</key>
+									<false/>
 								</dict>
 								<key>NodeID</key>
 								<integer>2</integer>
+							</dict>
+						</array>
+					</array>
+                   <!-- HP 21 14 4 (0x15 0x0e 0x04) (were 21 12 2)-->
+					<array>
+						<array>
+							<dict>
+								<key>Amp</key>
+								<dict>
+									<key>MuteInputAmp</key>
+									<true/>
+									<key>PublishMute</key>
+									<true/>
+									<key>PublishVolume</key>
+									<true/>
+									<key>VolumeInputAmp</key>
+									<false/>
+								</dict>
+								<key>NodeID</key>
+								<integer>21</integer>
+							</dict>
+							<dict>
+								<key>Amp</key>
+								<dict>
+									<key>MuteInputAmp</key>
+									<true/>
+									<key>PublishMute</key>
+									<true/>
+									<key>PublishVolume</key>
+									<true/>
+									<key>VolumeInputAmp</key>
+									<false/>
+								</dict>
+								<key>NodeID</key>
+								<integer>14</integer>
+							</dict>
+							<dict>
+								<key>Amp</key>
+								<dict>
+									<key>Channels</key>
+									<array>
+										<dict>
+											<key>Bind</key>
+											<integer>1</integer>
+											<key>Channel</key>
+											<integer>1</integer>
+										</dict>
+										<dict>
+											<key>Bind</key>
+											<integer>2</integer>
+											<key>Channel</key>
+											<integer>2</integer>
+										</dict>
+									</array>
+									<key>MuteInputAmp</key>
+									<true/>
+									<key>PublishMute</key>
+									<true/>
+									<key>PublishVolume</key>
+									<true/>
+									<key>VolumeInputAmp</key>
+									<false/>
+								</dict>
+								<key>NodeID</key>
+								<integer>4</integer>
 							</dict>
 						</array>
 					</array>

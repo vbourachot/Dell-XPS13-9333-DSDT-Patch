@@ -1,0 +1,28 @@
+01271C01 01271D01 01271EA0 01271F90 		- Internal Mic
+01471C02 01471D01 01471E17 01471F90 01470C02	- Speakers (70C02 sets EAPD enabled)
+01571C03 01571D40 01571E2B 01571F01 01570C02 	- Headphones (70c02 sets EAPD enabled)
+01671CF0 01671D00 01671E00 01671F40
+01871CF0 01871D00 01871E00 01871F40 
+01971CF0 01971D00 01971E00 01971F40 
+01A71CF0 01A71D00 01A71E00 01A71F40 
+01B71C04 01B71D10 01B71E8B 01B71F01 		- Line in
+01D71CF0 01D71D00 01D71E00 01D71F40 
+01E71CF0 01E71D00 01E71E00 01E71F40 
+01F71CF0 01F71D00 01F71E00 01F71F40 
+02050011 02040001 02050015 02040D60 		- Starting here, no idea what the remaining is
+020500B7 0204802B 020500C3 02040000
+00172000 00172172 0017226B 00172310
+
+Notes:
+Mic (x12) + Speakers (x14) + Headphones (x15) + Line in (x1b) all defined as part of the same group (71c*0*) and sequenced (71c0*1*/2/3/4)
+
+Internal mic and speakers defined as no jack detect (71d0*1*), HP and line in have jack detect.
+
+71e looks clean (default device and connection type). Note that HP connection and line in are set to 'Combination' connection type
+
+71f:
+Mic/Speakers: Fixed function connectivity / internal location
+HP: Jack connectivity / Rear location (11b would be left)
+Line in: Jack connectivity / rear location (same as HP node)
+
+x16 (line out), x18, x19, x1a, x1d, x1e, x1f are disabled as best as I can tell (071F40 means 01b connectivity == No physical connection for Port)
