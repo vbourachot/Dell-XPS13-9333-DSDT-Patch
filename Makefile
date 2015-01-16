@@ -3,7 +3,7 @@
 #
 # Patches/Installs/Builds DSDT patches for Dell XPS 13 9333
 #
-# Created by RehabMan 
+# Created by RehabMan
 # Adapted by vbourachot for XPS 13 9333
 #
 
@@ -26,7 +26,6 @@ EXTRADIR=/Extra
 BUILDDIR=./build
 PATCHED=./patched
 UNPATCHED=./unpatched
-PRODUCTS=$(BUILDDIR)/dsdt.aml $(BUILDDIR)/$(GFXSSDT).aml $(BUILDDIR)/$(ADDLSSDT1).aml
 DISASSEMBLE_SCRIPT=./disassemble.sh
 OSXV=10.10
 
@@ -44,6 +43,18 @@ PATCHMATIC=/usr/local/bin/patchmatic
 XMLLINT=xmllint --valid --noout
 #XMLLINT=touch
 
+# RehabMan's handy helper functions to identify PM SSDTs
+# Name(_PPC, ...) identifies SSDT with _PPC
+PPC=$(shell grep -l Name.*_PPC $(UNPATCHED)/SSDT*.dsl)
+PPC:=$(subst $(UNPATCHED)/,,$(subst .dsl,,$(PPC)))
+
+# Name(SSDT, Package...) identifies SSDT with dynamic SSDTs
+DYN=$(shell grep -l Name.*SSDT.*Package $(UNPATCHED)/SSDT*.dsl)
+DYN:=$(subst $(UNPATCHED)/,,$(subst .dsl,,$(DYN)))
+
+PRODUCTS=$(BUILDDIR)/dsdt.aml $(BUILDDIR)/$(GFXSSDT).aml $(BUILDDIR)/$(ADDLSSDT1).aml $(BUILDDIR)/$(PPC).aml $(BUILDDIR)/$(DYN).aml
+
+
 # Compile DSDT/SSDTs
 all: $(PRODUCTS)
 
@@ -54,6 +65,12 @@ $(BUILDDIR)/$(GFXSSDT).aml: $(PATCHED)/$(GFXSSDT).dsl
 	$(IASL) $(IASLFLAGS) -p $@ $<
 
 $(BUILDDIR)/$(ADDLSSDT1).aml: $(PATCHED)/$(ADDLSSDT1).dsl
+	$(IASL) $(IASLFLAGS) -p $@ $<
+
+$(BUILDDIR)/$(PPC).aml: $(PATCHED)/$(PPC).dsl
+	$(IASL) $(IASLFLAGS) -p $@ $<
+
+$(BUILDDIR)/$(DYN).aml: $(PATCHED)/$(DYN).dsl
 	$(IASL) $(IASLFLAGS) -p $@ $<
 
 
@@ -72,14 +89,16 @@ distclean: clean
 install: $(PRODUCTS)
 	if [ ! -d $(EFIDIR) ]; then mkdir $(EFIDIR) && diskutil mount -mountPoint $(EFIDIR) $(EFIVOL); fi
 	cp $(BUILDDIR)/dsdt.aml $(EFIDIR)/EFI/CLOVER/ACPI/patched
-	cp $(BUILDDIR)/$(GFXSSDT).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/ssdt-1.aml
-	cp $(BUILDDIR)/$(ADDLSSDT1).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/ssdt-2.aml
+	cp $(BUILDDIR)/$(PPC).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/ssdt-1.aml
+	cp $(BUILDDIR)/$(DYN).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/ssdt-2.aml
+	cp $(BUILDDIR)/$(GFXSSDT).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/ssdt-3.aml
+	cp $(BUILDDIR)/$(ADDLSSDT1).aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/ssdt-4.aml
 	diskutil unmount $(EFIDIR)
 	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi
 
 # Patch with 'patchmatic'
 patch:
-	cp $(UNPATCHED)/dsdt.dsl $(UNPATCHED)/$(GFXSSDT).dsl $(UNPATCHED)/$(ADDLSSDT1).dsl $(PATCHED)
+	cp $(UNPATCHED)/dsdt.dsl $(UNPATCHED)/$(GFXSSDT).dsl $(UNPATCHED)/$(ADDLSSDT1).dsl $(UNPATCHED)/$(PPC).dsl $(UNPATCHED)/$(DYN).dsl $(PATCHED)
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl patches/syntax_dsdt.txt $(PATCHED)/dsdt.dsl
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/syntax/remove_DSM.txt $(PATCHED)/dsdt.dsl
 	$(PATCHMATIC) $(PATCHED)/$(GFXSSDT).dsl $(LAPTOPGIT)/syntax/remove_DSM.txt $(PATCHED)/$(GFXSSDT).dsl
@@ -101,7 +120,7 @@ patch:
 #	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_RTC.txt $(PATCHED)/dsdt.dsl
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_SMBUS.txt $(PATCHED)/dsdt.dsl
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_Mutex.txt $(PATCHED)/dsdt.dsl
-	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_PNOT.txt $(PATCHED)/dsdt.dsl
+#	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_PNOT.txt $(PATCHED)/dsdt.dsl
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_IMEI.txt $(PATCHED)/dsdt.dsl
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(LAPTOPGIT)/system/system_ADP1.txt $(PATCHED)/dsdt.dsl
 
@@ -116,6 +135,8 @@ patch:
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl patches/disable_wifi_switch.txt $(PATCHED)/dsdt.dsl
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl patches/add_SMCD.txt $(PATCHED)/dsdt.dsl
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl patches/lpss.txt $(PATCHED)/dsdt.dsl
+
+	$(PATCHMATIC) $(PATCHED)/$(PPC).dsl patches/syntax_ppc.txt $(PATCHED)/$(PPC).dsl
 
 patch_debug: patch
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl $(DEBUGGIT)/debug.txt $(PATCHED)/dsdt.dsl
@@ -191,7 +212,7 @@ null_eth:
 # Install null ethernet ssdt
 install_null_eth: null_eth
 	if [ ! -d $(EFIDIR) ]; then mkdir $(EFIDIR) && diskutil mount -mountPoint $(EFIDIR) $(EFIVOL); fi
-	cp $(BUILDDIR)/ssdt-rmne_rand_mac.aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/ssdt-3.aml
+	cp $(BUILDDIR)/ssdt-rmne_rand_mac.aml $(EFIDIR)/EFI/CLOVER/ACPI/patched/ssdt-5.aml
 	diskutil unmount $(EFIDIR)
 	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi
 
