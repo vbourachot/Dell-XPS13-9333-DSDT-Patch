@@ -110,6 +110,11 @@
 	</dict>
 	<key>Devices</key>
 	<dict>
+		<key>FakeID</key>
+		<dict>
+			<key>IntelGFX</key>
+			<string>0x04128086</string>
+		</dict>
 		<key>USB</key>
 		<dict>
 			<key>Inject</key>
@@ -192,7 +197,7 @@
 				<key>Name</key>
 				<string>IOGraphicsFamily</string>
 				<key>Find</key>
-				<string>85C0745D48</string>
+				<string>85C0746B48</string>
 				<key>Replace</key>
 				<string>31C0745B48</string>
 			</dict>
@@ -202,9 +207,9 @@
 				<key>Name</key>
 				<string>IOGraphicsFamily</string>
 				<key>Find</key>
-				<string>4188C4EB03</string>
+				<string>4188C4EB11</string>
 				<key>Replace</key>
-				<string>4188C4EB23</string>
+				<string>4188C4EB31</string>
 			</dict>
 			<dict>
 				<key>Comment</key>
