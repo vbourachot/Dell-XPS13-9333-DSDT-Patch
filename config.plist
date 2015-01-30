@@ -147,7 +147,7 @@
 				<key>Comment</key>
 				<string>Disable AppleIntelMEIDriver (jmp)</string>
 				<key>Find</key>
-				<string>FF90D005000084C00F8460020000498B07</string>
+				<string>FF90D005000084C00F846B020000498B07</string>
 				<key>Replace</key>
 				<string>FF90D0050000E940000000909090498B07</string>
 			</dict>

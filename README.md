@@ -2,9 +2,6 @@
 
 Modified from RehabMan Lenovo U430 DSDT patches git (https://github.com/RehabMan/Lenovo-U430-Touch-DSDT-Patch)
 
-TODO:
- - Fix ALC668 headphone out
- 
 Done:
  - Clover config.plist for XPS 13 9333
  - AppleHDA patching and injection for ALC668 
@@ -15,8 +12,7 @@ Notes:
  - Replace linux_native contents with your own extract before patching
  - Review and configure Makefile variables before using
 
-http://www.tonymacx86.com/mavericks-laptop-support/136988-dell-xps-13-9333-haswell-clover-install-dsdt-guide.html
-
+http://www.tonymacx86.com/yosemite-laptop-support/146758-guide-dell-xps-13-9333-a.html
 
 Original readme follows:
 
