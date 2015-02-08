@@ -145,11 +145,11 @@
 				<key>Name</key>
 				<string>AppleIntelFramebufferAzul</string>
 				<key>Comment</key>
-				<string>Disable AppleIntelMEIDriver (jmp)</string>
+				<string>Prevent ME driver from writing to ME</string>
 				<key>Find</key>
-				<string>FF90D005000084C00F846B020000498B07</string>
+				<string>84C90F84BC0100004489F1</string>
 				<key>Replace</key>
-				<string>FF90D0050000E940000000909090498B07</string>
+				<string>84C9E9BD010000904489F1</string>
 			</dict>
 			<dict>
 				<key>Name</key>
@@ -193,17 +193,7 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>2nd stage boot patch 1</string>
-				<key>Name</key>
-				<string>IOGraphicsFamily</string>
-				<key>Find</key>
-				<string>85C0746B48</string>
-				<key>Replace</key>
-				<string>31C0745B48</string>
-			</dict>
-			<dict>
-				<key>Comment</key>
-				<string>2nd stage boot patch 2</string>
+				<string>2nd stage boot</string>
 				<key>Name</key>
 				<string>IOGraphicsFamily</string>
 				<key>Find</key>
@@ -223,7 +213,7 @@
 			</dict>
 			<dict>
 				<key>Name</key>
-				<string>disable_AirPortBrcm4360</string>
+				<string>#AirPortBrcm4360</string>
 				<key>Comment</key>
 				<string>BCM4352 WLAN Info patch</string>
 				<key>InfoPlistPatch</key>
@@ -232,16 +222,6 @@
 				<string>pci14e4,43a0</string>
 				<key>Replace</key>
 				<string>pci14e4,43b1</string>
-			</dict>
-			<dict>
-				<key>Name</key>
-				<string>disable_AirPortBrcm4360</string>
-				<key>Comment</key>
-				<string>BCM4352 WLAN 5GHz US</string>
-				<key>Find</key>
-				<string>5854002B182C210020</string>
-				<key>Replace</key>
-				<string>5553080A361C47000A</string>
 			</dict>
 		</array>
 		<key>ForceKextsToLoad</key>
