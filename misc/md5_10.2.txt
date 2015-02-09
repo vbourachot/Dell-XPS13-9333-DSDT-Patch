@@ -1,0 +1,2 @@
+MD5 (/System/Library/Extensions/AppleIntelFramebufferAzul.kext/Contents/MacOS/AppleIntelFramebufferAzul) = 8c5ddcfeb646f8639e3aa04e1ba1ba26
+MD5 (/System/Library/Extensions/AppleAHCIPort.kext/Contents/MacOS/AppleAHCIPort) = 5c4156d02ebb7fba9dfa738d921a4cf9

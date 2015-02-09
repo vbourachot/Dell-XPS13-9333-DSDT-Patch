@@ -153,6 +153,16 @@
 			</dict>
 			<dict>
 				<key>Name</key>
+				<string>AppleAHCIPort</string>
+				<key>Comment</key>
+				<string>Skip enable ALPM</string>
+				<key>Find</key>
+				<string>F6C1010F84C0000000B8FFFFFFFF</string>
+				<key>Replace</key>
+				<string>F6C101E9C100000090B8FFFFFFFF</string>
+			</dict>
+			<dict>
+				<key>Name</key>
 				<string>AppleHDA</string>
 				<key>Comment</key>
 				<string>Expect 2 matches</string>
