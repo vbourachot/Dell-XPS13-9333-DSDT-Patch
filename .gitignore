@@ -9,8 +9,9 @@ build/*.kext
 unpatched/*
 !unpatched/readme.txt
 tools/patch-hda.3.4/*
+tools/ssdtPRGen.sh
 null_eth/ssdt-rmne_rand_mac.dsl
 config.plist.smbios
 config.plist.local
-origin/SLIC.aml
-origin/MSDM.aml
+origin/*.aml
+origin/Dumplog.txt

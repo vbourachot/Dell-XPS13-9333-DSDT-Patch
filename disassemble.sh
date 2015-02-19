@@ -18,13 +18,13 @@ if [ -e tmp/* ]; then
     rm ./tmp/*
 fi
 
-cp ./linux_native/DSDT ./linux_native/SSDT* ./linux_native/dynamic/SSDT* ./tmp
+cp ./origin/DSDT.aml ./origin/SSDT* ./tmp
 chmod +w ./tmp/*
 cd ./tmp
 list=`echo *`
 
 for aml in $list; do
-    /usr/local/bin/iasl -p ../unpatched/$aml.dsl -e ${list//$aml/} -d $aml
+    /usr/local/bin/iasl -p ../unpatched/${aml%.*}.dsl -e ${list//$aml/} -d $aml
 done
 
 cd ..

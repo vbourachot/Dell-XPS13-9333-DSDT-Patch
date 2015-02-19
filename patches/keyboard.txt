@@ -10,7 +10,7 @@ Method (_DSM, 4, NotSerialized)\n
     Return (Package()\n
     {\n
         "RM,oem-id", "DELL",\n
-        "RM,oem-table-id", "SNB-CPT",\n
+        "RM,oem-table-id", "XPS13",\n
     })\n
 }\n
 end;

@@ -6,11 +6,11 @@ Done:
  - Clover config.plist for XPS 13 9333
  - AppleHDA patching and injection for ALC668 
  - Complete DSDT patching (backlight, battery, graphics, sleep, miniDP, ...)
- - Custom Info.plist for codec commander and fakesmc
+ - Custom Info.plist for fakesmc
 
 Notes: 
- - Replace linux_native contents with your own extract before patching
  - Review and configure Makefile variables before using
+ - Refactored to use CLOVER ACPI dump instead of pulling tables from linux
 
 http://www.tonymacx86.com/yosemite-laptop-support/146758-guide-dell-xps-13-9333-a.html
 

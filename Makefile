@@ -16,13 +16,14 @@
 # Install Clover config
 # make install_config
 
-GFXSSDT=ssdt5
-ADDLSSDT1=ssdt6
-EFIDIR=/Volumes/EFI
+# Confirm location:
 EFIVOL=/dev/disk0s1
+EFIDIR=/Volumes/EFI
+
+GFXSSDT=SSDT-7
+ADDLSSDT1=SSDT-8
 LAPTOPGIT=../Laptop-DSDT-Patch
 DEBUGGIT=../OS-X-ACPI-Debug
-EXTRADIR=/Extra
 BUILDDIR=./build
 PATCHED=./patched
 UNPATCHED=./unpatched
@@ -135,7 +136,7 @@ patch:
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl patches/disable_wifi_switch.txt $(PATCHED)/dsdt.dsl
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl patches/add_SMCD.txt $(PATCHED)/dsdt.dsl
 	$(PATCHMATIC) $(PATCHED)/dsdt.dsl patches/lpss.txt $(PATCHED)/dsdt.dsl
-
+	$(PATCHMATIC) $(PATCHED)/dsdt.dsl patches/usb_XHC1.txt $(PATCHED)/dsdt.dsl
 	$(PATCHMATIC) $(PATCHED)/$(PPC).dsl patches/syntax_ppc.txt $(PATCHED)/$(PPC).dsl
 
 patch_debug: patch
@@ -151,6 +152,13 @@ patch_debug: patch
 # Disassemble DSDT/SSDTs from linux_native/ acpi extract
 disassemble:
 	$(DISASSEMBLE_SCRIPT)
+
+# Get ACPI tables from CLOVER EFI/CLOVER/ACPI/origin/
+get_acpi:
+	if [ ! -d $(EFIDIR) ]; then mkdir $(EFIDIR) && diskutil mount -mountPoint $(EFIDIR) $(EFIVOL); fi
+	cp $(EFIDIR)/EFI/CLOVER/ACPI/origin/* ./origin/
+	diskutil unmount $(EFIDIR)
+	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi
 
 
 # Patch AppleHDA for ALC668 codec
@@ -194,15 +202,6 @@ install_plist_smc:
 	diskutil unmount $(EFIDIR)
 	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi
 
-# Install VoodooPS2Keyboard custom Info.plist
-install_plist_kb:
-	$(XMLLINT) ./plists/VoodooPS2Keyboard_Info.plist
-	if [ ! -d $(EFIDIR) ]; then mkdir $(EFIDIR) && diskutil mount -mountPoint $(EFIDIR) $(EFIVOL); fi
-	cp ./plists/VoodooPS2Keyboard_Info.plist $(EFIDIR)/EFI/CLOVER/kexts/$(OSXV)/VoodooPS2Controller.kext/Contents/PlugIns/VoodooPS2Keyboard.kext/Contents/Info.plist
-	touch $(EFIDIR)/EFI/CLOVER/kexts/$(OSXV)/VoodooPS2Controller.kext
-	diskutil unmount $(EFIDIR)
-	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi
-
 
 # Compile ssdt for null ethernet
 null_eth:
@@ -217,18 +216,17 @@ install_null_eth: null_eth
 	if [ -d $(EFIDIR) ]; then rmdir $(EFIDIR); fi
 
 
-.PHONY: all clean distclean patch patch_debug install install_extra \
-		disassemble patch_hda install_hda install_config \
-		install_plist_cc install_plist_smc \
-		null_eth install_null_eth
+.PHONY: all clean distclean patch patch_debug install \
+		get_acpi disassemble patch_hda install_hda \
+		install_config install_plist_smc null_eth install_null_eth
 
 # native correlations
-# ssdt1 - sensrhub
-# ssdt2 - PtidDevc
-# ssdt3 - Cpu0Ist
-# ssdt4 - CpuPm
-# ssdt5 - SaSsdt (gfx0)
-# ssdt6 - IsctTabl Defines Device IAOE for _PST
-# ssdt7 - PmRef - Cpu0Cst (dynamic)
-# ssdt8 - PmRef - ApIst (dynamic)
-# ssdt9 - PmRef - ApCst (dynamic)
+# ssdt-0 - sensrhub
+# ssdt-1 - PtidDevc
+# ssdt-2 - Cpu0Ist
+# ssdt-3 - CpuPm
+# ssdt-7 - SaSsdt (gfx0)
+# ssdt-8 - IsctTabl Defines Device IAOE for _PST
+# ssdtxx - PmRef - Cpu0Cst (dynamic)
+# ssdtxx - PmRef - ApIst (dynamic)
+# ssdtxx - PmRef - ApCst (dynamic)
