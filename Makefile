@@ -20,8 +20,6 @@
 EFIVOL=/dev/disk0s1
 EFIDIR=/Volumes/EFI
 
-GFXSSDT=SSDT-7
-ADDLSSDT1=SSDT-8
 LAPTOPGIT=../Laptop-DSDT-Patch
 DEBUGGIT=../OS-X-ACPI-Debug
 BUILDDIR=./build
@@ -52,6 +50,18 @@ PPC:=$(subst $(UNPATCHED)/,,$(subst .dsl,,$(PPC)))
 # Name(SSDT, Package...) identifies SSDT with dynamic SSDTs
 DYN=$(shell grep -l Name.*SSDT.*Package $(UNPATCHED)/SSDT*.dsl)
 DYN:=$(subst $(UNPATCHED)/,,$(subst .dsl,,$(DYN)))
+
+# IAOE is defined in the last SSDT extracted by CLOVER.
+# Depending on which BIOS features are enabled (TPM in particular),
+# the SSDT index changes.
+# This retrieves the proper filename based on RehabMan's idea above.
+ADDLSSDT1=$(shell grep -l Device.*IAOE $(UNPATCHED)/SSDT*.dsl)
+ADDLSSDT1:=$(subst $(UNPATCHED)/,,$(subst .dsl,,$(ADDLSSDT1)))
+
+# Do the same thing for the GPU ssdt while we're at it.
+# Identified via Device (PEG0) in unpatched folder
+GFXSSDT=$(shell grep -l Device.*PEG0 $(UNPATCHED)/SSDT*.dsl)
+GFXSSDT:=$(subst $(UNPATCHED)/,,$(subst .dsl,,$(GFXSSDT)))
 
 PRODUCTS=$(BUILDDIR)/dsdt.aml $(BUILDDIR)/$(GFXSSDT).aml $(BUILDDIR)/$(ADDLSSDT1).aml $(BUILDDIR)/$(PPC).aml $(BUILDDIR)/$(DYN).aml
 
@@ -226,7 +236,8 @@ install_null_eth: null_eth
 # ssdt-2 - Cpu0Ist
 # ssdt-3 - CpuPm
 # ssdt-7 - SaSsdt (gfx0)
-# ssdt-8 - IsctTabl Defines Device IAOE for _PST
+# ssdt-8 - TpmTable
+# ssdt-9 - IsctTabl Defines Device IAOE for _PST
 # ssdtxx - PmRef - Cpu0Cst (dynamic)
 # ssdtxx - PmRef - ApIst (dynamic)
 # ssdtxx - PmRef - ApCst (dynamic)

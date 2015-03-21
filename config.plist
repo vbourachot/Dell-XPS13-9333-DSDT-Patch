@@ -8,6 +8,8 @@
 	</array>
 	<key>CPU</key>
 	<dict>
+		<key>QPI</key>
+		<string>100</string>
 		<key>C2</key>
 		<true/>
 		<key>C4</key>
