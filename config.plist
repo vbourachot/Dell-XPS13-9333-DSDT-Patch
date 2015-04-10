@@ -147,21 +147,11 @@
 				<key>Name</key>
 				<string>AppleIntelFramebufferAzul</string>
 				<key>Comment</key>
-				<string>Prevent ME driver from writing to ME</string>
+				<string>Disable AppleIntelMEIDriver (jmp)</string>
 				<key>Find</key>
-				<string>84C90F84BC0100004489F1</string>
+				<string>FF90D005000084C00F846B020000498B07</string>
 				<key>Replace</key>
-				<string>84C9E9BD010000904489F1</string>
-			</dict>
-			<dict>
-				<key>Name</key>
-				<string>AppleAHCIPort</string>
-				<key>Comment</key>
-				<string>Skip enable ALPM</string>
-				<key>Find</key>
-				<string>F6C1010F84C0000000B8FFFFFFFF</string>
-				<key>Replace</key>
-				<string>F6C101E9C100000090B8FFFFFFFF</string>
+				<string>FF90D0050000E940000000909090498B07</string>
 			</dict>
 			<dict>
 				<key>Name</key>

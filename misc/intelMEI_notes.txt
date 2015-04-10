@@ -1,8 +1,57 @@
+Update: Going back to first way (disabled via plist path). Third way is good but delays boot times and doesn't fix issue with brightness at minimum for a few minutes after wake.
+
+-----
+
+Third way.. Prevent the controller from sending messages. 
+                     
+__ZN23AppleMEClientController11sendMessageEP15MEIDriverData_tPvjS2_Pjb:        
+// AppleMEClientController::sendMessage(MEIDriverData_t*, void*, 
+unsigned int, void*, unsigned int*, bool)
+000000000002dc7a         push       rbp                                         
+; XREF=__ZN23AppleMEClientController23addNextJobToActiveQueueEv+184, 
+__ZN23AppleMEClientController4stopEP9IOService+170, 
+__ZN23AppleMEClientController14uploadDMAEntryEP16_MECLIENTALLOC_Tj+137, 
+__ZN23AppleMEClientController13setContentKeyEP15MECLIENT_DATA_TP19_SetXcriptKeyInBuffPi+284, 
+__ZN23AppleMEClientController12getDiagStateEv+85, 
+__ZN23AppleMEClientController15getFirmwareModeEv+102, 
+__ZN23AppleMEClientController12closeSessionEb+102, 
+__ZN23AppleMEClientController11saveSessionEv+103, 
+__ZN23AppleMEClientController14restoreSessionEv+174, 
+__ZN23AppleMEClientController14restoreSessionEv+383, 
+__ZN23AppleMEClientController12cmdProcessorEP15MECLIENT_DATA_TP25IOExternalMethodArguments+659, 
+…
+000000000002dc7b         mov        rbp, rsp
+000000000002dc7e         push       r15
+000000000002dc80         push       r14
+000000000002dc82         push       r12
+000000000002dc84         push       rbx
+000000000002dc85         mov        r14, r9
+000000000002dc88         mov        r15, r8
+000000000002dc8b         mov        r12, rsi
+000000000002dc8e         mov        rbx, qword [ds:rdi+0xf8]
+000000000002dc95         test       rbx, rbx
+000000000002dc98         je         0x2dcdf
+...
+000000000002dcdf         xor        eax, eax                                    
+000000000002dce1         jmp        0x2dd09
+...
+0x2dd09:  pop and ret
+
+--> replace conditional jump at 2dc98 with jump at same address. 
+--> function call returns 0 (xor eax, eax is called), and everything 
+seems ok.
+
+-----
+Second way: Prevent driver from writing to ME (from AppleIntelMEIDriver)
+--> Works fine, but kernel_task stuck at 7% cpu constantly -> speedstep 
+ko
+
+-----
 Crude way to remove MEI driver - on boot:
  sudo kextunload -c AppleIntelMEIDriver -v 5
 --> doesn't work
 
----
+-----
 Kext patch to jump to 'disabled by plist' path:
 perl -pi -e 's|\xFF\x90\xD0\x05\x00\x00\x84\xC0\x0F\x84\x60\x02\x00\x00\x49\x8B\x07|\xFF\x90\xD0\x05\x00\x00\xE9\x40\x00\x00\x00\x90\x90\x90\x49\x8B\x07|sg' ./AppleIntelFramebufferAzul
 
@@ -42,6 +91,7 @@ Result:
 
 MEI driver loaded and attached to IMEI device  but NOT registered, NOT matched
 --> Sleep works after 3+ hours!
+--> Creates delay when opening vlc/chrome after sleep, breaks a few things (html5 in safari?)
 
 ---
 AppleMEClientController::uploadDMAEntry
