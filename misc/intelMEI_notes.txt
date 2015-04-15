@@ -1,99 +1,62 @@
-Update: Going back to first way (disabled via plist path). Third way is good but delays boot times and doesn't fix issue with brightness at minimum for a few minutes after wake.
+2 components involved: MEI driver (AppleIntelMEIDriver) and ME controller (AppleMEClientController), both packaged within the framebuffer kext.
 
------
+As long as the driver can't write to the ME, sleep/shutdown after 3+ hours running is fixed. 2 ways to do that:
+ - Prevent the driver from starting by following 'disabled by plist' in AppleIntelMEIDriver::start()
+ - Prevent the driver from writing to ME by jumping over AppleIntelMEIDriver::writeMessageToME(). Note: make sure the call returns 0 or it creates load in the kernel, breaking speedstep (symptom: kernel_task stuck at ~7% cpu constantly).
 
-Third way.. Prevent the controller from sending messages. 
-                     
-__ZN23AppleMEClientController11sendMessageEP15MEIDriverData_tPvjS2_Pjb:        
-// AppleMEClientController::sendMessage(MEIDriverData_t*, void*, 
-unsigned int, void*, unsigned int*, bool)
-000000000002dc7a         push       rbp                                         
-; XREF=__ZN23AppleMEClientController23addNextJobToActiveQueueEv+184, 
-__ZN23AppleMEClientController4stopEP9IOService+170, 
-__ZN23AppleMEClientController14uploadDMAEntryEP16_MECLIENTALLOC_Tj+137, 
-__ZN23AppleMEClientController13setContentKeyEP15MECLIENT_DATA_TP19_SetXcriptKeyInBuffPi+284, 
-__ZN23AppleMEClientController12getDiagStateEv+85, 
-__ZN23AppleMEClientController15getFirmwareModeEv+102, 
-__ZN23AppleMEClientController12closeSessionEb+102, 
-__ZN23AppleMEClientController11saveSessionEv+103, 
-__ZN23AppleMEClientController14restoreSessionEv+174, 
-__ZN23AppleMEClientController14restoreSessionEv+383, 
-__ZN23AppleMEClientController12cmdProcessorEP15MECLIENT_DATA_TP25IOExternalMethodArguments+659, 
-…
-000000000002dc7b         mov        rbp, rsp
-000000000002dc7e         push       r15
-000000000002dc80         push       r14
-000000000002dc82         push       r12
-000000000002dc84         push       rbx
-000000000002dc85         mov        r14, r9
-000000000002dc88         mov        r15, r8
-000000000002dc8b         mov        r12, rsi
-000000000002dc8e         mov        rbx, qword [ds:rdi+0xf8]
-000000000002dc95         test       rbx, rbx
-000000000002dc98         je         0x2dcdf
-...
-000000000002dcdf         xor        eax, eax                                    
-000000000002dce1         jmp        0x2dd09
-...
-0x2dd09:  pop and ret
+At this point, some issues:
+ - Slow boot (adds ~15 seconds to boot)
+ - Coming back from sleep, screen is stuck at min brightness for a couple minutes.
 
---> replace conditional jump at 2dc98 with jump at same address. 
---> function call returns 0 (xor eax, eax is called), and everything 
-seems ok.
+The above issues disappear if the ME controller is disabled (i.e. prevented from starting). But that creates yet some other issues (hang with quicktime, slow opening of vlc). This is the current compromise I'm running.
 
------
-Second way: Prevent driver from writing to ME (from AppleIntelMEIDriver)
---> Works fine, but kernel_task stuck at 7% cpu constantly -> speedstep 
-ko
-
------
-Crude way to remove MEI driver - on boot:
- sudo kextunload -c AppleIntelMEIDriver -v 5
---> doesn't work
-
------
-Kext patch to jump to 'disabled by plist' path:
-perl -pi -e 's|\xFF\x90\xD0\x05\x00\x00\x84\xC0\x0F\x84\x60\x02\x00\x00\x49\x8B\x07|\xFF\x90\xD0\x05\x00\x00\xE9\x40\x00\x00\x00\x90\x90\x90\x49\x8B\x07|sg' ./AppleIntelFramebufferAzul
-
--- Original:
-
-__ZN19AppleIntelMEIDriver5startEP9IOService:        // AppleIntelMEIDriver::start(IOService*)
-[...]
-0000000000029e08         call       qword [ds:rax+0x5d0]
-0000000000029e0e         test       al, al
-0000000000029e10         je         0x2a076
-
-0000000000029e16         mov        rax, qword [ds:r15]
-[...]
-0000000000029e53         lea        rdi, qword [ds:0x3dd7a] ; "ME Driver disabled via plist\\n", argument #1
-0000000000029e5a         xor        ebx, ebx
-0000000000029e5c         xor        eax, eax
-0000000000029e5e         call       0x29e63
-0000000000029e63         jmp        0x2a078                 ; XREF=__ZN19AppleIntelMEIDriver5startEP9IOService+114
-
--- Patched (jump to 'disabled by plist)
-0000000000029e08         call       qword [ds:rax+0x5d0]
-0000000000029e0e         jmp        0x29e53 // <-- HERE
-0000000000029e13         nop        
-0000000000029e14         nop        
-0000000000029e15         nop        
-0000000000029e16         mov        rax, qword [ds:r15]
-[...]
-0000000000029e53         lea        rdi, qword [ds:0x3dd7a] ; "ME Driver disabled via plist\\n", argument #1, XREF=__ZN19AppleIntelMEIDriver5startEP9IOService+34
-0000000000029e5a         xor        ebx, ebx
-0000000000029e5c         xor        eax, eax
-0000000000029e5e         call       0x29e63
-
-Result:
-1583:    | |   | +-o AppleIntelMEIDriver  <class AppleIntelMEIDriver, id 0x1000002c4, !registered, !matched, active, busy 0, retain 4>
-1584-    | |   |     {
-1585-    | |   |     }
-
-MEI driver loaded and attached to IMEI device  but NOT registered, NOT matched
---> Sleep works after 3+ hours!
---> Creates delay when opening vlc/chrome after sleep, breaks a few things (html5 in safari?)
+However, this means the issues of slow boot/low brightness are triggered in the controller (makes sense.. driver is probably called through the controller from the kernel/rest of the OS). Next step is to find a clean fix for these issues in the controller. So far:
+ - Patch AppleMEClientController::sendMessage --> no change
+ - Patch AppleMEClientController::sendCommon --> no change
 
 ---
-AppleMEClientController::uploadDMAEntry
-responsible for printing 'hmm.. mismatch sizes' on boot
+Places to look into:
+	AppleIntelMEIDriver::gatedSetPowerState()
+	AppleIntelMEIDriver::sendCommon()
+	AppleIntelMEIDriver::start() --> disabled via plist (known working)
+	AppleIntelMEIDriver::writeMessageToME() (known working)
+	  - Try jumping before calcFreeDWords
+	  - Try jumping to -1 destination (xor eax eax) to pretend the call was successful
 
+	KO -- AppleMEClientController::start(IOService*)
+	KO -- AppleMEClientController::setupPM(IOService*)
+	KO -- AppleMEClientController::sendMessage (...)
+
+---
+Patches:
+
+			<dict>
+				<key>Name</key>
+				<string>#AppleIntelFramebufferAzul</string>
+				<key>Comment</key>
+				<string>USELESS-AppleMEClientController::sendMessage</string>
+				<key>Find</key>
+				<string>4885DB7445498B34244885F6</string>
+				<key>Replace</key>
+				<string>4885DBE942000000904885F6</string>
+			</dict>
+			<dict>
+				<key>Name</key>
+				<string>#AppleIntelFramebufferAzul</string>
+				<key>Comment</key>
+				<string>USELESS-AppleIntelMEIDriver::sendCommon</string>
+				<key>Find</key>
+				<string>4885F67423BBBC0200E04D85C9</string>
+				<key>Replace</key>
+				<string>4885F6E9CC00000090904D85C9</string>
+			</dict>
+			<dict>
+				<key>Name</key>
+				<string>#AppleIntelFramebufferAzul</string>
+				<key>Comment</key>
+				<string>WORKS-Disable AppleIntelMEIDriver (jmp)</string>
+				<key>Find</key>
+				<string>FF90D005000084C00F846B020000498B07</string>
+				<key>Replace</key>
+				<string>FF90D0050000E940000000909090498B07</string>
+			</dict>
