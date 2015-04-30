@@ -145,26 +145,6 @@
 			</dict>
 			<dict>
 				<key>Name</key>
-				<string>AppleIntelFramebufferAzul</string>
-				<key>Comment</key>
-				<string>AppleIntelMEIDriver::writeMessageToME</string>
-				<key>Find</key>
-				<string>4883EC1844894DD04589C589CB</string>
-				<key>Replace</key>
-				<string>4883EC18E9E5010000909089CB</string>
-			</dict>
-			<dict>
-				<key>Name</key>
-				<string>AppleIntelFramebufferAzul</string>
-				<key>Comment</key>
-				<string>AppleMEClientController::start</string>
-				<key>Find</key>
-				<string>4885C00F8405030000488B05E50D0100488945D0</string>
-				<key>Replace</key>
-				<string>4885C0E90603000090488B05E50D0100488945D0</string>
-			</dict>
-			<dict>
-				<key>Name</key>
 				<string>AppleHDA</string>
 				<key>Comment</key>
 				<string>Expect 2 matches</string>
