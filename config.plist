@@ -174,16 +174,6 @@
 				<string>6806ec10</string>
 			</dict>
 			<dict>
-				<key>Name</key>
-				<string>IOAHCIBlockStorage</string>
-				<key>Comment</key>
-				<string>Trim Enabler</string>
-				<key>Find</key>
-				<data>QVBQTEUgU1NE</data>
-				<key>Replace</key>
-				<data>AAAAAAAAAAAA</data>
-			</dict>
-			<dict>
 				<key>Comment</key>
 				<string>2nd stage boot</string>
 				<key>Name</key>
