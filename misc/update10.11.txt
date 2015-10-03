@@ -1,0 +1,14 @@
+update clover to latest (3270). Update drivers too.
+
+replace ACPIBackLight.kext with IntelBacklight.kext
+sudo rm -rf /System/Library/Extensions/ACPIBacklight.kext/ && sudo cp -r /PATH/TO/RehabMan-IntelBacklight-2015-0918/Release/IntelBacklight.kext /System/Library/Extensions/ && sudo touch /System/Library/Extensions/ 
+
+update FakePCIID* and install FakePCIID_XHCIMux
+sudo rm -rf /System/Library/Extensions/FakePCIID* && sudo cp -r ./FakePCIID.kext ./FakePCIID_BCM94352Z_as_BCM94360CS2.kext FakePCIID_HD4600_HD4400.kext FakePCIID_XHCIMux.kext /System/Library/Extensions/ && sudo touch /System/Library/Extensions/ && tail -f /var/log/system.log
+
+replace brcmPatchRam with brcmPatchRam2 and BrcmFirmwareRepo
+sudo rm -rf /System/Library/Extensions/BrcmPatchRAM.kext/ && sudo cp -r PATH/TO/Release/BrcmPatchRAM2.kext PATH/TO/Release/BrcmFirmwareRepo.kext /System/Library/Extensions/ && sudo touch /System/Library/Extensions/ && top
+
+use updated config.plist
+
+re-download command-line dev tools: xcode-select --install

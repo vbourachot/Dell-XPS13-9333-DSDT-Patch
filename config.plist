@@ -175,13 +175,23 @@
 			</dict>
 			<dict>
 				<key>Comment</key>
-				<string>2nd stage boot</string>
+				<string>AppleHDA (#4 of 4, new in 10.11, credit lisai9093)</string>
+				<key>Find</key>
+				<data>gxnUEQ==</data>
+				<key>Name</key>
+				<string>AppleHDA</string>
+				<key>Replace</key>
+				<data>AAAAAA==</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Boot graphics glitch, 10.10.x/10.11.x (credit lisai9093, cecekpawon)</string>
+				<key>Find</key>
+				<data>AQAAdRc=</data>
 				<key>Name</key>
 				<string>IOGraphicsFamily</string>
-				<key>Find</key>
-				<string>4188C4EB11</string>
 				<key>Replace</key>
-				<string>4188C4EB31</string>
+				<data>AQAA6xc=</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
@@ -194,6 +204,13 @@
 				<data>xoDIAAAAAA==</data>
 			</dict>
 		</array>
+	</dict>
+	<key>RtVariables</key>
+	<dict>
+		<key>CsrActiveConfig</key>
+		<string>0x67</string>
+		<key>BooterConfig</key>
+		<string>0x28</string>
 	</dict>
 	<key>SystemParameters</key>
 	<dict>

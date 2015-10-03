@@ -5,3 +5,14 @@ into device label XHC set_label begin XHC1 end;
 into_all all code_regex XHC\. replaceall_matched begin XHC1. end;
 into_all all code_regex XHC_\. replaceall_matched begin XHC1. end;
 into_all all code_regex \.XHC, replaceall_matched begin .XHC1, end;
+
+# rename EHC to EH0 for 10.11
+# rename EHC1 to EH01
+into device label EHC1 set_label begin EH01 end;
+into_all all code_regex EHC1\. replaceall_matched begin EH01. end;
+into_all all code_regex \.EHC1, replaceall_matched begin .EH01, end;
+
+# rename EHC2 to EH02
+into device label EHC2 set_label begin EH02 end;
+into_all all code_regex EHC2\. replaceall_matched begin EH02. end;
+into_all all code_regex \.EHC2, replaceall_matched begin .EH02, end;
