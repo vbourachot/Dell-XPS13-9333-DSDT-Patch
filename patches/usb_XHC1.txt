@@ -16,3 +16,9 @@ into_all all code_regex \.EHC1, replaceall_matched begin .EH01, end;
 into device label EHC2 set_label begin EH02 end;
 into_all all code_regex EHC2\. replaceall_matched begin EH02. end;
 into_all all code_regex \.EHC2, replaceall_matched begin .EH02, end;
+
+# disable XWAK
+into method label XWAK replace_content
+begin
+    Return(0)\n
+end;

@@ -12,3 +12,5 @@ sudo rm -rf /System/Library/Extensions/BrcmPatchRAM.kext/ && sudo cp -r PATH/TO/
 use updated config.plist
 
 re-download command-line dev tools: xcode-select --install
+
+re-patch dsdt with updated usb patches
