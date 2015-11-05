@@ -15,6 +15,107 @@ Method (_DSM, 4, NotSerialized)\n
 }\n
 end;
 
+# overrides for VoodooPS2 configuration...
+into device label PS2K insert
+begin
+Name(RMCF, Package()\n
+{\n
+    "Controller", Package()\n
+    {\n
+        "WakeDelay", 0,\n
+    },\n
+    "Sentelic FSP", Package()\n
+    {\n
+        "DisableDevice", ">y",\n
+    },\n
+    "ALPS GlidePoint", Package()\n
+    {\n
+        "DisableDevice", ">y",\n
+    },\n
+    "Mouse", Package()\n
+    {\n
+        "DisableDevice", ">y",\n
+    },\n
+    "Synaptics TouchPad", Package()\n
+    {\n
+        "MultiFingerVerticalDivisor", 9,\n
+        "MultiFingerHorizontalDivisor", 9,\n
+        "MomentumScrollThreshY", 12,\n
+    },\n
+    "Keyboard", Package()\n
+    {\n
+        "ActionSwipeDown", "3b d, 7d d, 7d u, 3b u",\n
+        "ActionSwipeUp", "3b d, 7e d, 7e u, 3b u",\n
+        "Breakless PS2", Package()\n
+        {\n
+            Package(){}, // indicates array\n
+            "e005",\n
+            "e006",\n
+        },\n
+        "Function Keys Special", Package()\n
+        {\n
+            Package(){},\n
+            // The following 12 items map Fn+fkeys to Fn+fkeys\n
+            "e06e=e06e",\n
+            "e008=e008",\n
+            "e01e=e01e",\n
+            "e005=e005",\n
+            "e006=e006",\n
+            "e00c=e00c",\n
+            "",\n
+            "e010=e010",\n
+            "e022=e022",\n
+            "e019=e019",\n
+            "e02e=e02e",\n
+            "e030=e030",\n
+            // The following 12 items map fkeys to fkeys\n
+            "3b=3b",\n
+            "3c=3c",\n
+            "3d=3d",\n
+            "3e=3e",\n
+            "3f=3f",\n
+            "40=40",\n
+            "41=41",\n
+            "42=42",\n
+            "43=43",\n
+            "44=44",\n
+            "57=57",\n
+            "58=58",\n
+        },\n
+        "Function Keys Standard", Package()\n
+        {\n
+            Package(){},\n
+            // The following 12 items map Fn+fkeys to fkeys\n
+            "e06e=3b",\n
+            "e008=3c",\n
+            "e01e=3d",\n
+            "e005=3e",\n
+            "e006=3f",\n
+            "e00c=40",\n
+            "",\n
+            "e010=42",\n
+            "e022=43",\n
+            "e019=44",\n
+            "e02e=57",\n
+            "e030=58",\n
+            // The following 12 items map fkeys to Fn+fkeys\n
+            "3b=e06e",\n
+            "3c=e008",\n
+            "3d=e01e",\n
+            "3e=e005",\n
+            "3f=e006",\n
+            "40=e00c",\n
+            "41=41",\n
+            "42=e010",\n
+            "43=e022",\n
+            "44=e019",\n
+            "57=e02e",\n
+            "58=e030",\n
+        },\n
+    },\n
+})\n
+end;
+
 # Enable keyboard brightness control
 into method label _Q81 replace_content
 begin
