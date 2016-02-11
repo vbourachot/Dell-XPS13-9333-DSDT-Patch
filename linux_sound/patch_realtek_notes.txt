@@ -1,0 +1,26 @@
+patch_realtek.c:
++#define UPDATE_COEFEX(_nid, _idx, _mask, _val) \
++		 { .nid = (_nid), .idx = (_idx), .mask = (_mask), .val = (_val) }
++#define WRITE_COEFEX(_nid, _idx, _val) UPDATE_COEFEX(_nid, _idx, -1, _val)
++#define WRITE_COEF(_idx, _val) WRITE_COEFEX(0x20, _idx, _val)
++#define UPDATE_COEF(_idx, _mask, _val) UPDATE_COEFEX(0x20, _idx, _mask, _val)
+
+WRITE_COEF(_idx, _val) == UPDATE_COEFEX(0x20, _idx, -1, _val)
+				 	.nid, .idx, .mask, .val
+
+alc_process_coef_fw(*codec, *fw) {
+  for fw
+    alc_write_coefex_idx(codec, fw->nid, fw-> idx, fw->val)
+}
+
+WRITE_COEF(0x01, 0xbebe):
+UPDATE_COEFEX(0x20, 0x01, -1, 0xbebe):
+alc_write_coefex_idx(codec, 0x20, 0x01, 0xbebe):
+snd_hda_codec_write(codec, 0x20, 0, AC_VERB_SET_COEF_INDEX, 0x01);
+snd_hda_codec_write(codec, 0x20, 0, AC_VERB_SET_PROC_COEF, 0xbebe);
+
+===
+0x20 is realtek's magic undocumented widget... The hundreds of WRITE_COEF() 
+in patch_realtek.c all address this node.
+
+Coef dump instructions: https://bugzilla.kernel.org/show_bug.cgi?id=87771
