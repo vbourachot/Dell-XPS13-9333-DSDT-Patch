@@ -24,7 +24,7 @@ cd ./tmp
 list=`echo *`
 
 for aml in $list; do
-    /usr/local/bin/iasl -p ../unpatched/${aml%.*}.dsl -e ${list//$aml/} -d $aml
+    /usr/local/bin/iasl -dl -p ../unpatched/${aml%.*}.dsl -e ${list//$aml/} -d $aml
 done
 
 cd ..
