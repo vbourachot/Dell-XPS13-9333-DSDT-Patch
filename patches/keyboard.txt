@@ -46,6 +46,8 @@ Name(RMCF, Package()\n
     {\n
         "ActionSwipeDown", "3b d, 7d d, 7d u, 3b u",\n
         "ActionSwipeUp", "3b d, 7e d, 7e u, 3b u",\n
+        "ActionSwipeLeft", "37 d, 7b d, 7b u, 37 u",\n
+        "ActionSwipeRight", "37 d, 7c d, 7c u, 37 u",\n
         "Breakless PS2", Package()\n
         {\n
             Package(){}, // indicates array\n
