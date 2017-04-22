@@ -141,14 +141,24 @@
 		<key>KextsToPatch</key>
 		<array>
 			<dict>
-				<key>Name</key>
-				<string>AppleIntelFramebufferAzul</string>
 				<key>Comment</key>
-				<string>0x0a260006 6->9MB cursor bytes patch</string>
+				<string> 0x0a260006 9MB cursor bytes (vbo), 2 ports only (RehabMan)</string>
 				<key>Find</key>
-				<string>0600260a01030303000000020000300100006000</string>
+				<data>BgAmCgEDAwMAAAACAAAwAQAAYAA=</data>
+				<key>Name</key>
+				<string>com.apple.driver.AppleIntelFramebufferAzul</string>
 				<key>Replace</key>
-				<string>0600260a01030303000000020000300100009000</string>
+				<data>BgAmCgEDAgIAAAACAAAwAQAAkAA=</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>0x0a260006 disable 0204 port, change 0105 DP port to 0204 HDMI (RehabMan)</string>
+				<key>Find</key>
+				<data>AQUJAAAEAACHAAAAAgQJAAAEAACHAAAA</data>
+				<key>Name</key>
+				<string>com.apple.driver.AppleIntelFramebufferAzul</string>
+				<key>Replace</key>
+				<data>AgQJAAAIAACHAAAA/wAAAAEAAABAAAAA</data>
 			</dict>
 			<dict>
 				<key>Name</key>
@@ -195,10 +205,24 @@
 				<string>Boot graphics glitch, 10.10.x/10.11.x (credit lisai9093, cecekpawon)</string>
 				<key>Find</key>
 				<data>AQAAdRc=</data>
+				<key>MatchOS</key>
+				<string>10.10.x,10.11.x</string>
 				<key>Name</key>
 				<string>IOGraphicsFamily</string>
 				<key>Replace</key>
 				<data>AQAA6xc=</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Boot graphics glitch, 10.12.dp1 (credit denskop)</string>
+				<key>Find</key>
+				<data>AQAAdSU=</data>
+				<key>MatchOS</key>
+				<string>10.12.x</string>
+				<key>Name</key>
+				<string>com.apple.iokit.IOGraphicsFamily</string>
+				<key>Replace</key>
+				<data>AQAA6yU=</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
@@ -209,6 +233,30 @@
 				<data>xoDIAAAAAQ==</data>
 				<key>Replace</key>
 				<data>xoDIAAAAAA==</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>AirPortBrcm4360 - fcvo, 10.12.x (credit the-darkvoid)</string>
+				<key>Find</key>
+				<data>gflSqgAAdSk=</data>
+				<key>MatchOS</key>
+				<string>10.12.x</string>
+				<key>Name</key>
+				<string>com.apple.driver.AirPort.Brcm4360</string>
+				<key>Replace</key>
+				<data>gflSqgAAZpA=</data>
+			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>10.11.dp1+ BT4LE-Handoff-Hotspot, credit RehabMan based on Dokterdok original</string>
+				<key>Find</key>
+				<data>SIX/dEdIiwc=</data>
+				<key>MatchOS</key>
+				<string>10.11.x,10.12.x</string>
+				<key>Name</key>
+				<string>com.apple.iokit.IOBluetoothFamily</string>
+				<key>Replace</key>
+				<data>Qb4PAAAA60Q=</data>
 			</dict>
 			<dict>
 				<key>Comment</key>
